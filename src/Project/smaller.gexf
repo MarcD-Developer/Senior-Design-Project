@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gexf xmlns="http://www.gexf.net/1.3" version="1.3" xmlns:viz="http://www.gexf.net/1.3/viz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.3 http://www.gexf.net/1.3/gexf.xsd">
+  <meta lastmodifieddate="2016-04-14">
+    <creator>Gephi 0.9</creator>
+    <description></description>
+  </meta>
+  <graph defaultedgetype="directed" mode="static">
+    <attributes class="node" mode="static">
+      <attribute id="friends" title="friends" type="double"></attribute>
+      <attribute id="lfr" title="lfr" type="double"></attribute>
+      <attribute id="followers" title="followers" type="double"></attribute>
+      <attribute id="ffr" title="ffr" type="double"></attribute>
+      <attribute id="listed" title="listed" type="double"></attribute>
+      <attribute id="shape" title="shape" type="string"></attribute>
+      <attribute id="statuses" title="statuses" type="double"></attribute>
+      <attribute id="type" title="type" type="string"></attribute>
+      <attribute id="file" title="file" type="string"></attribute>
+      <attribute id="image" title="image" type="string"></attribute>
+      <attribute id="modularity_class" title="Modularity Class" type="integer">
+        <default>0</default>
+      </attribute>
+    </attributes>
+    <nodes>
+      <node id="2.66687361E8" label="MiniLaddd">
+        <attvalues>
+          <attvalue for="friends" value="445.0"></attvalue>
+          <attvalue for="lfr" value="0.007"></attvalue>
+          <attvalue for="followers" value="643593.0"></attvalue>
+          <attvalue for="ffr" value="1446.2764"></attvalue>
+          <attvalue for="listed" value="450.0"></attvalue>
+          <attvalue for="shape" value="triangle-up"></attvalue>
+          <attvalue for="statuses" value="51017.0"></attvalue>
+          <attvalue for="type" value="friends"></attvalue>
+          <attvalue for="file" value="dilinilams.dat"></attvalue>
+          <attvalue for="image" value="/home/smokedeel/Desktop/twecoll-master/img/266687361.jpg"></attvalue>
+          <attvalue for="modularity_class" value="1"></attvalue>
+        </attvalues>
+        <viz:size value="10.0"></viz:size>
+        <viz:position x="-152.80063" y="-70.07328"></viz:position>
+        <viz:color r="0" g="109" b="44"></viz:color>
+      </node>
+      <node id="3.80020286E8" label="VanossGaming">
+        <attvalues>
+          <attvalue for="friends" value="385.0"></attvalue>
+          <attvalue for="lfr" value="0.0078"></attvalue>
+          <attvalue for="followers" value="1516661.0"></attvalue>
+          <attvalue for="ffr" value="3939.3792"></attvalue>
+          <attvalue for="listed" value="1179.0"></attvalue>
+          <attvalue for="shape" value="triangle-up"></attvalue>
+          <attvalue for="statuses" value="7548.0"></attvalue>
+          <attvalue for="type" value="friends"></attvalue>
+          <attvalue for="file" value="dilinilams.dat"></attvalue>
+          <attvalue for="image" value="/home/smokedeel/Desktop/twecoll-master/img/380020286.jpg"></attvalue>
+          <attvalue for="modularity_class" value="1"></attvalue>
+        </attvalues>
+        <viz:size value="10.0"></viz:size>
+        <viz:position x="275.6589" y="-103.20298"></viz:position>
+        <viz:color r="0" g="109" b="44"></viz:color>
+      </node>
+      <node id="3.99909209E8" label="I_AM_WILDCAT">
+        <attvalues>
+          <attvalue for="friends" value="551.0"></attvalue>
+          <attvalue for="lfr" value="0.0063"></attvalue>
+          <attvalue for="followers" value="753276.0"></attvalue>
+          <attvalue for="ffr" value="1367.1071"></attvalue>
+          <attvalue for="listed" value="477.0"></attvalue>
+          <attvalue for="shape" value="triangle-up"></attvalue>
+          <attvalue for="statuses" value="54963.0"></attvalue>
+          <attvalue for="type" value="friends"></attvalue>
+          <attvalue for="file" value="dilinilams.dat"></attvalue>
+          <attvalue for="image" value="/home/smokedeel/Desktop/twecoll-master/img/399909209.jpg"></attvalue>
+          <attvalue for="modularity_class" value="1"></attvalue>
+        </attvalues>
+        <viz:size value="10.0"></viz:size>
+        <viz:position x="-136.20837" y="98.08065"></viz:position>
+        <viz:color r="0" g="109" b="44"></viz:color>
+      </node>
+      <node id="4.0298041E8" label="Nightbloo">
+        <attvalues>
+          <attvalue for="friends" value="355.0"></attvalue>
+          <attvalue for="lfr" value="0.0176"></attvalue>
+          <attvalue for="followers" value="121761.0"></attvalue>
+          <attvalue for="ffr" value="342.9887"></attvalue>
+          <attvalue for="listed" value="214.0"></attvalue>
+          <attvalue for="shape" value="triangle-up"></attvalue>
+          <attvalue for="statuses" value="3289.0"></attvalue>
+          <attvalue for="type" value="friends"></attvalue>
+          <attvalue for="file" value="dilinilams.dat"></attvalue>
+          <attvalue for="image" value="/home/smokedeel/Desktop/twecoll-master/img/402980410.png"></attvalue>
+          <attvalue for="modularity_class" value="0"></attvalue>
+        </attvalues>
+        <viz:size value="10.0"></viz:size>
+        <viz:position x="-199.62222" y="51.37087"></viz:position>
+        <viz:color r="237" g="248" b="251"></viz:color>
+      </node>
+      <node id="2.158637516E9" label="lolGosu">
+        <attvalues>
+          <attvalue for="friends" value="134.0"></attvalue>
+          <attvalue for="lfr" value="0.0187"></attvalue>
+          <attvalue for="followers" value="191856.0"></attvalue>
+          <attvalue for="ffr" value="1431.7612"></attvalue>
+          <attvalue for="listed" value="358.0"></attvalue>
+          <attvalue for="shape" value="triangle-up"></attvalue>
+          <attvalue for="statuses" value="9093.0"></attvalue>
+          <attvalue for="type" value="friends"></attvalue>
+          <attvalue for="file" value="dilinilams.dat"></attvalue>
+          <attvalue for="image" value="/home/smokedeel/Desktop/twecoll-master/img/2158637516.jpg"></attvalue>
+          <attvalue for="modularity_class" value="0"></attvalue>
+        </attvalues>
+        <viz:size value="10.0"></viz:size>
+        <viz:position x="232.47668" y="-240.65337"></viz:position>
+        <viz:color r="237" g="248" b="251"></viz:color>
+      </node>
+      <node id="3.11775629E8" label="H2ODelirious">
+        <attvalues>
+          <attvalue for="friends" value="677.0"></attvalue>
+          <attvalue for="lfr" value="0.0072"></attvalue>
+          <attvalue for="followers" value="1134892.0"></attvalue>
+          <attvalue for="ffr" value="1676.3545"></attvalue>
+          <attvalue for="listed" value="820.0"></attvalue>
+          <attvalue for="shape" value="triangle-up"></attvalue>
+          <attvalue for="statuses" value="12432.0"></attvalue>
+          <attvalue for="type" value="friends"></attvalue>
+          <attvalue for="file" value="dilinilams.dat"></attvalue>
+          <attvalue for="image" value="/home/smokedeel/Desktop/twecoll-master/img/311775629.png"></attvalue>
+          <attvalue for="modularity_class" value="1"></attvalue>
+        </attvalues>
+        <viz:size value="10.0"></viz:size>
+        <viz:position x="-19.504389" y="264.47812"></viz:position>
+        <viz:color r="0" g="109" b="44"></viz:color>
+      </node>
+    </nodes>
+    <edges>
+      <edge id="0" source="2.66687361E8" target="3.99909209E8" weight="33.7403314917"></edge>
+      <edge id="1" source="2.66687361E8" target="3.80020286E8" weight="4.54151624549"></edge>
+      <edge id="2" source="2.66687361E8" target="3.11775629E8" weight="7.01184433164"></edge>
+      <edge id="3" source="3.80020286E8" target="2.66687361E8" weight="27.4876077586"></edge>
+      <edge id="4" source="3.80020286E8" target="3.11775629E8" weight="7.01184433164"></edge>
+      <edge id="5" source="3.80020286E8" target="3.99909209E8" weight="33.7403314917"></edge>
+      <edge id="6" source="3.99909209E8" target="2.66687361E8" weight="27.4876077586"></edge>
+      <edge id="7" source="3.99909209E8" target="3.11775629E8" weight="7.01184433164"></edge>
+      <edge id="8" source="3.99909209E8" target="3.80020286E8" weight="4.54151624549"></edge>
+      <edge id="9" source="4.0298041E8" target="2.158637516E9" weight="10.1145717464"></edge>
+      <edge id="10" source="2.158637516E9" target="4.0298041E8" weight="2.024"></edge>
+      <edge id="11" source="3.11775629E8" target="3.99909209E8" weight="33.7403314917"></edge>
+      <edge id="12" source="3.11775629E8" target="3.80020286E8" weight="4.54151624549"></edge>
+      <edge id="13" source="3.11775629E8" target="2.66687361E8" weight="27.4876077586"></edge>
+    </edges>
+  </graph>
+</gexf>

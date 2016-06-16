@@ -1,0 +1,22 @@
+Thoughts so far:
+
+Looked into bootstrap.  Seems to be a nice idea on how to build a website.  Interestingly enough, two pre built websites caught my eye.  Dashboard, and the Navbar templates.  
+
+Mostly towards using the dashboard template as a basis for our graphing website.  However, we can use the navbar example for the dropdown menus that are on its page.  
+
+In order to use these sources however, you would need to download bootstrap.  From there, it looks like there are several items it's pulling data from.  
+
+So far so good.  Nothing wrong so far
+
+Within bootstrap, the examples are found under.  .../docs/examples/ within the bootstrap folder
+
+[HTML]
+Meta - A tag that describes data. Won't appear but is machine parsable.  
+DIV - Container
+
+
+
+
+[JQuery]
+pageX - The mouse position relative to the left edge of the document.
+pageY - The mouse position relative to the top edge of the document.

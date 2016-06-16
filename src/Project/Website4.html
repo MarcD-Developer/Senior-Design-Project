@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<!-- Start Sigma Imports -->
+
+<html>
+<head>
+	<title> CMSC 451 Sigma Website </title>
+<script src="../sigma.core.js"></script>
+<script src="../conrad.js"></script>
+<script src="../utils/sigma.utils.js"></script>
+<script src="../utils/sigma.polyfills.js"></script>
+<script src="../sigma.settings.js"></script>
+<script src="../classes/sigma.classes.dispatcher.js"></script>
+<script src="../classes/sigma.classes.configurable.js"></script>
+<script src="../classes/sigma.classes.graph.js"></script>
+<script src="../classes/sigma.classes.camera.js"></script>
+<script src="../classes/sigma.classes.quad.js"></script>
+<script src="../classes/sigma.classes.edgequad.js"></script>
+<script src="../captors/sigma.captors.mouse.js"></script>
+<script src="../captors/sigma.captors.touch.js"></script>
+<script src="../renderers/sigma.renderers.canvas.js"></script>
+<script src="../renderers/sigma.renderers.webgl.js"></script>
+<script src="../renderers/sigma.renderers.svg.js"></script>
+<script src="../renderers/sigma.renderers.def.js"></script>
+<script src="../renderers/webgl/sigma.webgl.nodes.def.js"></script>
+<script src="../renderers/webgl/sigma.webgl.nodes.fast.js"></script>
+<script src="../renderers/webgl/sigma.webgl.edges.def.js"></script>
+<script src="../renderers/webgl/sigma.webgl.edges.fast.js"></script>
+<script src="../renderers/webgl/sigma.webgl.edges.arrow.js"></script>
+<script src="../renderers/canvas/sigma.canvas.labels.def.js"></script>
+<script src="../renderers/canvas/sigma.canvas.hovers.def.js"></script>
+<script src="../renderers/canvas/sigma.canvas.nodes.def.js"></script>
+<script src="../renderers/canvas/sigma.canvas.edges.def.js"></script>
+<script src="../renderers/canvas/sigma.canvas.edges.curve.js"></script>
+<script src="../renderers/canvas/sigma.canvas.edges.arrow.js"></script>
+<script src="../renderers/canvas/sigma.canvas.edges.curvedArrow.js"></script>
+<script src="../renderers/canvas/sigma.canvas.edgehovers.def.js"></script>
+<script src="../renderers/canvas/sigma.canvas.edgehovers.curve.js"></script>
+<script src="../renderers/canvas/sigma.canvas.edgehovers.arrow.js"></script>
+<script src="../renderers/canvas/sigma.canvas.edgehovers.curvedArrow.js"></script>
+<script src="../renderers/canvas/sigma.canvas.extremities.def.js"></script>
+<script src="../renderers/svg/sigma.svg.utils.js"></script>
+<script src="../renderers/svg/sigma.svg.nodes.def.js"></script>
+<script src="../renderers/svg/sigma.svg.edges.def.js"></script>
+<script src="../renderers/svg/sigma.svg.edges.curve.js"></script>
+<script src="../renderers/svg/sigma.svg.labels.def.js"></script>
+<script src="../renderers/svg/sigma.svg.hovers.def.js"></script>
+<script src="../middlewares/sigma.middlewares.rescale.js"></script>
+<script src="../middlewares/sigma.middlewares.copy.js"></script>
+<script src="../misc/sigma.misc.animation.js"></script>
+<script src="../misc/sigma.misc.bindEvents.js"></script>
+<script src="../misc/sigma.misc.bindDOMEvents.js"></script>
+<script src="../misc/sigma.misc.drawHovers.js"></script>
+
+
+<!-- End Sigma Imports -->
+<script src="../../plugins/sigma.plugins.dragNodes/sigma.plugins.dragNodes.js"></script>
+<script src="../../plugins/sigma.parsers.gexf/gexf-parser.js"></script>
+<script src="../../plugins/sigma.parsers.gexf/sigma.parsers.gexf.js"></script>
+<script src="../../plugins/sigma.plugins.filter/sigma.plugins.filter.js"></script>
+<link href='http://fonts.googleapis.com/css?family=Lato:300,700' rel='stylesheet' type='text/css'>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<style type="text/css">
+	
+	body{
+				margin:0;
+				padding:0;
+				font-family: Sans-Serif;
+				line-height: 1.5em;
+			}
+			/* main page area */
+			main {
+				padding-bottom: 10010px;
+				margin-bottom: -10000px;
+				float: left;
+				width: 100%;
+			}
+			/* Toolbar to the left */
+			#nav {
+				float: left;
+				width: 230px;
+				height: 945px;
+				margin-left: -100%;
+				padding-bottom: 10010px;
+				margin-bottom: -10000px;
+				background: #eee;
+			}
+			/* decides what to do with contents if it exceeds the size of the element's box.  Default value is visible"" */
+			#wrapper {
+				overflow: hidden;
+			}
+			 /*indents with a specified margin */
+			#content {
+				margin-left: 230px; /* Same as 'nav' width */
+			}
+			
+			.innertube{
+				margin: 15px; /* Padding for content.  Sets all four margins of content. */ 
+				margin-top: 0; /* Indents from the top */
+			}
+			
+			
+			nav ul {
+				list-style-type: none;
+				margin: 0;
+				padding: 0;
+			}
+			
+			nav ul a {
+				color: darkgreen;
+				text-decoration: none;
+			}
+	
+		</style>
+	</head>
+<body>
+
+<div id=”container”>
+
+<style>
+
+    #graph-container {
+      top: 10%;
+      bottom: 10%;
+      left: 200px;
+      right: 20px;
+      position: absolute;
+	  overflow: hidden;
+    }
+#disc { <!-- Part of add node. Need both to add nodes -->
+      position: relative;
+      top: 100%;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+ 
+    #ground { <!-- Part of add node -->
+      position: relative;
+      background: #ccc;
+      top: 100%;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+	
+	
+	</style>
+  <div id="graph-container">
+  <canvas class="sigma-scene" width="2698" height="610px" style="position: absolute; width: 1349px; height: 305px;"></canvas>
+  <canvas class="sigma-labels" width="1349" height="305px" style="position: absolute; width: 1349px; height: 305px;"></canvas>
+  <canvas class="sigma-mouse" width="1349" height="305px" style="position: absolute; width: 1349px; height: 305px;"></canvas>
+ <div id="disc"></div>
+    <div id="ground"></div> 
+
+
+  </div> 
+  <!--<div id ="control-pane">
+  <h2 class="underline">filters</h2>
+  </div>  -->
+  </div>
+<body>
+		<div id="wrapper">
+		
+			<main>
+				<div id="content">
+					<div class="innertube"> <!-- Leaves an area for the heading -->
+						<h1>SigmaJS</h1> <!-- Signifies heading -->
+						
+					</div>
+				</div>
+			</main>
+			
+			<nav id="nav">
+				<div class="innertube">
+					<h3>WIP </h3>
+					<ul>
+					<!--	<li><a href="#">Add Node</a></li>
+					<li><a href="#">Remove Node</a></li>
+					<li><a href="#">Add Edge</a></li>
+					<li><a href="#">Remove Edge</a></li>-->
+					
+	<button onclick="addNode()">Add Node</button> <!-- Buttons will go here -->
+	<button onclick="removeNode()">Remove Node</button>  <!-- I know the buttons work -->
+	<button onclick="addEdge()">Add Edge</button> 
+	<button onclick="removeEdge()">Remove Edge</button> 
+	<button onclick="dragNode()">Drag Node</button> 
+
+ 
+<li><form action="demo_form.asp">
+ Node ID: <input type="text"     name="nodeid"><br>
+ <input type="submit" value="Submit"></li>
+
+				
+					</ul>
+				
+				</div>
+			</nav>
+			
+		</div>
+	</body>
+  <script>
+	/* things to add, all the other functions x_x
+	   hmm, check on events for maybe a way to display node ids and shit
+	   This is killing me...send help
+	   
+	*/
+
+ function addNode() 
+ {
+	var s,
+		c,
+		nId = 0, //starts node count at 0
+		labelId = 0,
+		spaceMode = false,
+		eId = 0; //starts edge count at 0
+	
+	s = new sigma({
+			renderer: { 
+			container: document.getElementById('graph-container'),
+			type: 'canvas'
+		},
+		settings: { //this part is dealt with in another javascript by sigma
+			autoRescale: false,
+			mouseEnabled: false,
+			touchEnabled: false,
+			enableEdgeHovering: true, //allows for the mouse to be able to hover over an item.  
+			edgeHoverSizeRatio: 1
+			}
+		});
+	dom = document.querySelector('#graph-container canvas:last-child'); 
+	c = s.camera;  //Calls sigma Camera
+	
+	// console.log("Debugging: This works"); I know this works, leaving it in comments in case I need it later
+	/* This checks which key is being pressed.  Returns a code for that key.  Use it to look for keycodes
+	document.onkeypress = function(myEvent)
+	{
+		console.log(myEvent.which);
+	}; */
+ //};
+	function frame()
+	{
+		s.refresh();
+		
+		if(s.graph.nodes().length) {
+			var w = dom.offsetWidth,
+				h = dom.offsetHeight;
+				 var xMin = Infinity,
+          xMax = -Infinity,
+          yMin = Infinity,
+          yMax = -Infinity,
+          margin = 50,
+          scale;
+
+      s.graph.nodes().forEach(function(n) { //need this for each coordinate
+        xMin = Math.min(n.x, xMin);
+        xMax = Math.max(n.x, xMax);
+        yMin = Math.min(n.y, yMin);
+        yMax = Math.max(n.y, yMax);
+      });
+
+      xMax += margin;
+      xMin -= margin;
+      yMax += margin;
+      yMin -= margin;
+
+      scale = Math.min(
+        w / Math.max(xMax - xMin, 1),
+        h / Math.max(yMax - yMin, 1)
+      );
+
+      c.goTo({
+        x: (xMin + xMax) / 2,
+        y: (yMin + yMax) / 2,
+        ratio: 1 / scale
+      });
+				
+	}
+		
+	requestAnimationFrame(frame);
+		
+  }
+	frame();
+	//finding an issue here.  When you click into add node, it creates a new instance, which seems to be an issue.  
+	dom.addEventListener('click', function(test) //tests for a key press
+	{
+		console.log("This has been checked"); // So far, reads correctly, meaning that this function is waiting for a button press
+				
+			var x,
+				y,
+				p,
+				id,
+				g;
+							
+			x = sigma.utils.getX(test) - dom.offsetWidth / 2;
+			y = sigma.utils.getY(test) - dom.offsetHeight / 2;
+
+			p = c.cameraPosition(x, y); //gets a camera position
+			x = p.x; //this sets the current position for the nodes
+			y = p.y;
+			//for some reason this only appears if I hit f12
+			
+			if (!spaceMode)
+			s.graph.addNode({
+			//g.nodes.push({
+			id: (++nId) + '',
+			label: (label = 'Node ' + (++labelId)),
+			x: x + Math.random() / 10,
+			y: y + Math.random() / 10,
+			size: 5,
+			color: '#666'
+			});
+			
+			g = s.graph.addNode; 
+	//		console.log("Debugging: 'A' key has been pressed");
+		
+		
+		//issue here. Creates a new instance whenever a new node is created
+		
+		}, false);
+		dom.addEventListener('mousemove', function(test) { //these are all part of dom = document.querySelector('#graph-container canvas:last-child');
+		mouseX = sigma.utils.getX(test);
+		mouseY = sigma.utils.getY(test);
+		}, false);
+		document.addEventListener('keydown', function(test) { //spacemode doesn't seem to agree with me
+		spaceMode = (test.which == 32) ? true : spaceMode;
+		document.addEventListener('keyup', function(test) {
+		spaceMode = test.which == 32 ? false : spaceMode;
+		
+		//this particular function comes from event.  Doesn't seem to work.  
+		s.bind('overNode outNode clickNode doubleClickNode rightClickNode', function(test) {
+			console.log(test.type, test.data.node.label, test.data.captor); });
+  });
+  });
+	};
+  
+ function removeNode() //curious.  If the function will only work in the same area, how would it fair with something else.
+ {					   //What I mean by this, is that if someone were to click this after addnode, would it still take the function of addnode?
+	console.log("This is functioning properly");
+ }
+ function addEdge() //these are empty, and yet no nodes appear.  
+ {
+ }
+ function removeEdge()
+ {
+ }
+ function dragNode() //should be able to drag around nodes with this
+ {					 //for some reason, clicking on this one causes more nodes to be created.  
+	
+//	addNode(); //should be able bring in addNode calls? could totally be wrong
+	var s;
+	s = sigmaGenerate();
+	sigma.renderers.def = sigma.renderers.canvas
+// s = new sigma({
+ // container: 'graph-container'
+//});
+ 
+ // Initialize the dragNodes plugin:
+var dragListener = sigma.plugins.dragNodes(s, s.renderers[0]);
+
+
+dragListener.bind('startdrag', function(event) {
+  console.log(event);
+});
+dragListener.bind('drag', function(event) {
+  console.log(event);
+});
+dragListener.bind('drop', function(event) {
+  console.log(event);
+});
+dragListener.bind('dragend', function(event) {
+  console.log(event);
+});
+
+
+ }
+ 
+ function sigmaGenerate()
+ {
+	var s;
+	s = new sigma({
+		container: 'graph-container'
+	
+	});
+ }
+ 
+// document.addEventListener('keydown', function(test) {
+//	 testTrue = (test.which == 32)
+//	})  //checks for keypress.  
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

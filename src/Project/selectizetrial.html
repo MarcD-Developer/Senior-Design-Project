@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<title>Selectize</title>
+  <!-- JQuery File -->
+	<script src="jquery-2.2.0.js"></script>
+
+<script type="text/javascript" src="../standalone/selectize.js"></script>
+<link rel="stylesheet" type="text/css" href="selectize.css" />
+
+ <script src="../standalone/selectize.min.js"></script>
+
+</head>
+<body>
+
+<input type="text" id='selectionArea'></input>
+
+	
+    </body>
+
+<script>
+//$(document).ready(function(){
+ var data = [ "option 1", "option 2", "option 3" ];
+var items = data.map(function(x) { return { item: x }; });
+
+    $('#selectionArea').selectize({ 
+    delimiter: ',',
+    persist: false,
+    create: function(input) {
+        return {
+            value: input,
+            text: input,
+             labelField: "item",
+    valueField: "item",
+    sortField: 'item',
+    searchField: 'item'
+        	}
+    	}
+	});
+//});
+</script>
+  <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../Bootstrap/bootstrap/dist/js/bootstrap.min.js"></script> <!-- IMPORTANT THIS HAS BEEN UPDATED -->
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+</html>

@@ -1,0 +1,4468 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- This only works if the dist folder is two folders before this specific folder -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!--  <link rel="icon" href="../../favicon.ico"> -->
+    <title>Visualize</title>
+    <!-- Bootstrap core CSS (IMPORTANT: THIS HAS BEEN UPDATED)-->
+    <link href="../../Bootstrap/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="dashboard.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="navbar.css" rel="stylesheet">
+    <!-- JQuery File -->
+    <script src="jquery-2.2.0.js"></script>
+    <!-- Auto Fill -->
+    <script src='complete.ly.1.0.1.min.js'></script>
+    <!-- Keys for twecoll -->
+    <!-- Consumer Key (API)     cegAegP1urd5Px80YY23MbzWU -->
+    <!-- IMPORTANT. 
+        Under FireFox, if you go to about:config, you will find a thing called "security.fileuri.strict-origin_policy;"  Change the boolean value to false to allow for glyphicons to appear.  -->
+</head>
+
+<body>
+    <div class="container">
+        <!-- Static navbar.  This will be the top area for the top bar -->
+        <!--      <nav class="navbar navbar-default">  This class calls a default nav bar which comes from the navbar template -->
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <!-- This specific class calls the black top that I was looking for -->
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a role="button" class="navbar-brand" onClick="window.location.reload()">Visualize</a>
+                    <!-- This opens project name on the side. Calling it sigma for now -->
+                </div>
+                <div id="navbar" class="navbar-collapse collapse ">
+                    <!-- This area has feedback for glyphicons -->
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">File</a>
+                            <ul class="dropdown-menu">
+                                <li><a role="button" onclick="clearGraph()">New</a></li>
+                                <li><a role="button" onclick="saveFile()">Save</a></li>
+                                <li><a role="button" onclick="openFileSelect()">Open</a></li>
+                            </ul>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Edit</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Undo</a></li>
+                                </ul>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Create <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li class="dropdown-header">Adding</li>
+                                        <li><a role="button" onclick="addNode()" id="nodeAdd">Add a Node</a></li>
+                                        <li><a role="button" onclick="addEdge()" id="edgeAdd">Add An edge</a></li>
+                                        <!--   <li role="separator" class="divider"></li>
+                    <li class="dropdown-header">Node Types</li>
+                        <li><a role="button"onclick="nodeBorder()">Border</a></li>
+                        <li><a role="button"onclick="nodeDef()">No Border</a> -->
+                                        <!--    <li role="separator" class="divider"></li>
+                                        <li class="dropdown-header">Edge Types</li>
+                                        <li><a role="button" onclick="edgeLine()">Line</a> </li>
+                                        <li><a role="button" onclick="edgeCurve()">Curve</a></li>
+                                        <li><a role="button" onclick="edgeArrow()">Arrow</a></li>
+                                        <li><a role="button" onclick="edgeCurvedArrow()">Curved Arrow</a>
+                                            <li><a role="button" onclick="edgeAngled()">Angled</a> -->
+                                        <!--     <li role="separator" class="divider"></li>
+                     <li class="dropdown-header">Color</li>
+                   <li><a role="button"onclick="nodeColorChange()">Change Node Color</a></li>
+                   <li><a role="button"onclick="edgeColorChange()">Change Edge Color</a></li> -->
+                                        <!--              <li><a href="#">Testing</a></li>  Interestingly enough, this can add more -->
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tools <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li class="dropdown-header">Selecting</li>
+                                        <li><a role="button" onclick="selection()" id="selectionButton">Selection</a></li>
+                                        <li><a role="button" onclick="selectMultiple()" id="multipleSelectButton">Multiple Selection</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li class="dropdown-header">Filter</li>
+                                        <li><a role="button" onclick="filterNodes()" id="filterButton">Filter Nodes</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li class="dropdown-header">Move</li>
+                                        <li><a role="button" onclick="dragNode()">Drag</a></li>
+                                        <!--   <li role="separator" class="divider"></li>
+                  <li class="dropdown-header">Animations</li>
+                  <li><a role="button"onclick="forceAtlas()">Force Atlas2</a></li>
+               <li><a role="button" id = "forcestop">Stop</a></li> 
+               <li><a role="button"onclick="fruchterman()">Fruchterman Reingold</a></li> -->
+                                        <li role="separator" class="divider"></li>
+                                        <li class="dropdown-header">Removal</li>
+                                        <li><a role="button" onclick="deletion()" id="deletionButton">Delete</a></li>
+                                        <li><a role="button" onclick="clearGraph()">Clear All</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                Animations <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a role="button" onclick="forceAtlas()">Force Atlas2</a></li>
+                                        <!--    <li><a role="button" id = "forcestop">Stop</a></li> -->
+                                        <li><a role="button" onclick="fruchterman()">Fruchterman Reingold</a></li>
+                                        <!--<li><a role="button" onclick="cubic()">Cubic</a></li> -->
+                                        <li><a role="button" onclick="circle()">Circle</a></li>
+                                    </ul>
+                                </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <!--          <li> <a href="#">Inbox <span class="badge">42</span></a> </li> -->
+                        <!-- This provides a number to the side.  This coulld be useful for later -->
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Profile</a></li>
+                                <li><a href="#">Help</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li class="dropdown-header"> Settings</li>
+                                <li><a role="button" id="regularGraph">Original</a></li>
+                                <li><a role="button" id="invertGraph">Inverted</a></li>
+                                <li><a role="button" onclick = "threshold()">Label Threshold</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li class="dropdown-header"> Information</li>
+                                <li><a role="button" data-toggle="modal" data-target="#dataModal" id="tableSet">Data Table</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li class="dropdown-header">Hiding</li>
+                                <li><a role="button" onclick="hideAll()">Hide All Nodes</a></li>
+                                <li><a role="button" onclick="unHideAll()">Unhide All Nodes</a></li>
+                                <li><a role="button" id="hideAllEdges">Hide Edges</a></li>
+                                <li><a role="button" id="unhideAllEdges">Unhide Edges</a></li>
+                                <li><a role="button" id="keepEdges">Edges On</a></li>
+                                <li><a role="button" id="hideAllLabels">Hide Labels</a></li>
+                                <li><a role="button" id="unhideAllLabels">Unhide Labels</a></li>
+                                <li><a role="button" id="fixedLabels">Fixed Size Labels</a></li>
+                                <li><a role="button" id="proportionalLabels">Proportional Sized Labels</a></li>
+                                <li><a role="button" id="hoveringOverEdges">Edge Hovering</a></li>
+                                <li><a role="button" id="hoveringOverEdgesDisabled">Disable Edge Hovering</a></li>
+                                <!-- <li> <a role="button" id="appearBox">Pop Up</a> </li> -->
+                            </ul>
+                        </li>
+                    </ul>
+                    <form onsubmit="return false" class="navbar-form navbar-right">
+                        <input type="text" class="form-control" id="searchBar" placeholder="Search Nodes">
+                    </form>
+                </div>
+            </div>
+        </nav>
+        <!--   <div class="container-fluid">
+            <!-- Left side menu area -->
+        <!-- <div class="row">
+                <div class="col-sm-3 col-md-2 sidebar">
+                    <ul class="nav nav-sidebar"> -->
+        <!-- Opens up some navigation tabs -->
+        <!--   <ul class="nav nav-pills">
+           <li role="presentation"><a href="#create" aria-controls="create" role="pills" data-toggle="tab" >Create  <span class="caret"></span></a> </li>
+          <li role="presentation"><a href="#tools" aria-controls="tools" role="pill" data-toggle="tab" >Tools</a></li>
+          <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a></li>
+          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+          </ul> <!-- End of navigation tabs -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade" id="create">
+                <div class="btn-group-vertical" role="group" aria-label="...">
+                    <li class="dropdown-header">Adding</li>
+                    <button type="button" class="btn btn-default" onclick="addNode()"> Add a Node</button>
+                    <button type="button" class="btn btn-default" onclick="addEdge()"> Add an Edge</button>
+                    <li class="dropdown-header">Node Types</li>
+                    <button type="button" class="btn btn-default" onclick="nodeBorder()"> Border</button>
+                    <button type="button" class="btn btn-default" onclick="nodeDef()"> No Border</button>
+                    <li class="dropdown-header">Edge Types</li>
+                    <button type="button" class="btn btn-default" onclick="edgeLine()"> Line</button>
+                    <button type="button" class="btn btn-default" onclick="edgeCurve()"> Curve</button>
+                    <button type="button" class="btn btn-default" onclick="edgeArrow()"> Arrow</button>
+                    <button type="button" class="btn btn-default" onclick="edgeCurvedArrow()"> Curved Arrow</button>
+                    <button type="button" class="btn btn-default" onclick="edgeAngled()"> Angled</button>
+                    <li class="dropdown-header">Color</li>
+                    <button type="button" class="btn btn-default" onclick="nodeColorChange()"> Change Node Color</button>
+                    <button type="button" class="btn btn-default" onclick="edgeColorChange()"> Change Edge Color</button>
+                    <li class="dropdown-header">Hiding</li>
+                    <button type="button" class="btn btn-default" onclick="hideAll()"> Hide All</button>
+                    <button type="button" class="btn btn-default" onclick="unHideAll()"> Unhide All</button>
+                </div>
+                <!-- End of Create Group -->
+            </div>
+            <!-- End of Create Area -->
+            <div role="tabpanel" class="tab-pane fade" id="tools">
+                <li><a role="button" onclick="zoomOut()">Zoom Out</a></li>
+            </div>
+            <!-- Tools Area end -->
+            <div role="tabpanel" class="tab-pane fade" id="messages">...</div>
+        </div>
+        <!-- End of tab content -->
+        <div id="selectionMenu" class="hidden" class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+                <h4 class="panel-title">
+    <!--    <a role="button" class="navar-text" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+          Selected Node
+       <span class="caret"></span> </a>
+       <li role="separator" class="divider"></li>
+       </h4>
+                <br>
+                <p>Hide:
+                    <input type="checkbox" id="hideBox" onchange="hide()"> Zoom In:
+                    <input type="checkbox" id="nodeZoomIn" onchange="nodeZoom()">
+                    <br>
+                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon1">Node Label</span>
+                            <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon1" id="nodelabel">
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon2">Node Size  </span>
+                            <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon2" id="nodesize">
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon3">Node Color</span>
+                            <input value="colorChange" class="form-control jscolor {onFineChange:'colorNode(this)'}" aria-describedby="basic-addon3" id="colorBox">
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon4">Tags    </span>
+                            <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon4" id="nodetag">
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon5">Description    </span>
+                            <textarea class="form-control" rows="3" placeholder="" value="" id="nodedesc"></textarea>
+                            <!-- <input type="text" class="form-control" placeholder="" value="" aria-describedby="basic-addon4" id="nodedesc"> -->
+                            <!--  </div>
+                                        <ul id="attributeArrayItems">
+                                        </ul> -->
+                            <!--   <div class="panel-body">
+        
+        
+                    <p id="nodeid"> </p> 
+                <p>Node Label: <input type="text" size="1"class="form-control" id="nodelabel" placeholder=""> </p>  
+                <p>Size: <input type="text" id="nodesize" placeholder="" size="5"> </p> -->
+                            <!--    <p id="nodesize"> </p> -->
+                            <!--    <p>Color <select id="colorList" placeholder="Color" onchange="colorTest()">
+                    <option>Grey</option>
+                    <option>Red</option>
+                    <option>Orange</option>  
+                    <option>Yellow</option>
+                    <option>Green</option>
+                    <option>Blue</option>
+                    <option>Purple</option>
+                    <option>Black</option>
+                    </select>  <!-- <input type="text" id="nodecolor" placeholder="" size="5"> /p> -->
+                            <!--        <p>Color: <input value="colorChange" class="jscolor {onFineChange:'colorNode(this)'}" id="colorBox" > -->
+                            <!--    <p>Color: <input value="#666" class="jscolor {required:false}" onchange="colorNode(this.jscolor)" id="colorBox"> -->
+                            <!--        <p id="nodetype"> </p>
+                    <p id="nodex"> </p>
+                    <p id="nodey"> </p> -->
+                            <!--        <p>Tag: <input type="text" id="nodetag" placeholder="" size="5"> </p>   -->
+                            <!--  </ul> -->
+                            <!-- Line Break -->
+                        </div>
+                    </div>
+            </div>
+            <!--     <div id="selectedEdgeMenu" class="hidden" class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingTwo">
+                                <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Selected Edge
+       <span class="caret"></span> </a>
+      </h4>
+                                <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+                                    <br>
+                                    <div class="input-group">
+                                        <span class="input-group-addon" id="basic-addon1">Edge Label</span>
+                                        <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon1" id="edgelabel">
+                                    </div>
+                                    <br>
+                                    <div class="input-group">
+                                        <span class="input-group-addon" id="basic-addon2">Edge Size  </span>
+                                        <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon2" id="edgesize">
+                                    </div>
+                                    <br>
+                                    <div class="input-group">
+                                        <span class="input-group-addon" id="basic-addon3">Edge Color</span>
+                                        <input value="#666" class="form-control jscolor {onFineChange:'colorEdge(this)'}" aria-describedby="basic-addon3" id="colorEdgeBox">
+                                    </div>
+                                    <br>
+                                    <div class="input-group">
+                                        <span class="input-group-addon" id="basic-addon4">Type    </span>
+                                        <select id="edgeTypeList" class="form-control" onChange="dynamicEdge()">
+                                            <option id="line">Line</option>
+                                            <option id="curve">Curve</option>
+                                            <option id="arrow">Arrow</option>
+                                            <option id="curvedArrow">Curved Arrow</option>
+                                            <option id="angle">Right Angle</option>
+                                        </select>
+                                    </div> -->
+            <!--  <div class="panel-body">
+                    <p id="edgesource"> </p>
+                    <p id="edgetarget"> </p>
+                    <p id="edgeid"> </p>
+                    <p>Label <input type="text" id="edgelabel" placeholder="" size="5"> </p>
+                    <p>Size <input type="text" id="edgesize" placeholder="" > 
+                    <p>Color: <input value="#666" class="jscolor {onFineChange:'colorEdge(this)'}" id="colorEdgeBox"> -->
+            <!--    <p>Color <select id="edgeColorList" placeholder="Color" onchange="colorEdge()">
+                    <option id="edgedef"></option>
+                    <option>Grey</option>
+                    <option>Red</option>
+                    <option>Orange</option>  
+                    <option>Yellow</option>
+                    <option>Green</option>
+                    <option>Blue</option>
+                    <option>Purple</option>
+                    <option>Black</option>
+                    </select></p> -->
+            <!--    <p>Type <select id="edgeTypeList" onchange="dynamicEdge()">
+                    <option id="line">Line</option>
+                    <option id="curve">Curve</option>
+                    <option id="arrow">Arrow</option>  
+                    <option id="curvedArrow">Curved Arrow</option>
+                    <option id="angle">Right Angle</option>
+            
+                    </select> -->
+        </div>
+    </div>
+    </div>
+    </div>
+    <!-- Data Table Modal -->
+    <div class="modal fade" id="dataModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Node Data <div >
+                    <button type="button" class="btn btn-default btn-sm" id="newSectionData">
+                      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    </button>
+                     </div></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                        </div>
+                        <!-- Table -->
+                        <div style="overflow: auto; height: 200px;">
+                            <table class="table" id="nodeTable">
+                                <thead>
+                                    <tr>
+                                        <th>Node Id</th>
+                                        <th>Node Label</th>
+                                        <th>Node Size</th>
+                                        <th>Node Color</th>
+                                        <th>Node Tag</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dataBody">
+                                    <tr>
+                                        <!-- Nodes will be added here -->
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div style="overflow: auto; height: 200px;">
+                            <table class="table" id="edgeTable">
+                                <thead>
+                                    <tr>
+                                        <th>Edge Id</th>
+                                        <th>Edge Label</th>
+                                        <th>Source</th>
+                                        <th>Target</th>
+                                        <th>Color</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dataEdgeBody">
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick "document.getElementById('#nodeTable tbody').empty();">Close</button>
+                    <!--  <button type="button" class="btn btn-primary">Save changes</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End data table modal -->
+    <!--
+    <div id="multipleNodesSelected" class="visible" class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingThree">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Multiple Nodes
+       <span class="caret"></span> </a>
+      </h4>
+      <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
+       <div class="panel-body" >
+        <!-- Multiple Node Attributes -->
+    </div>
+    </div>
+    </div>
+    </div -->
+    </ul>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <style>
+    body {
+        color: #000;
+        font-size: 14px;
+        // font-family: Lato, sans-serif;
+    }
+    
+    #graph-container {
+        top: 5%;
+        bottom: 0.1px;
+        left: 0px;
+        right: 0.1px;
+        position: absolute;
+        overflow: hidden;
+        display: inline-block;
+    }
+    
+    .sidebar {
+        display: none;
+        position: fixed;
+        top: 51px;
+        bottom: 0;
+        width: 300px;
+        left: 0;
+        z-index: 1000;
+        display: block;
+        //border-radius: 6px;
+        padding: 20px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        /* Scrollable contents if viewport is shorter than content. */
+        background-color: #e9eaed;
+        border-right: 1px solid #7c7c7c;
+    }
+    /*  #selectiondiv{ <!-- Needed for the multiple selection container -->
+        border:2px solid white;
+        background:#1B94E0; <!-- Makes square a blue color -->
+        opacity:0.4; <!-- makes it slightly transparent -->
+        filter:alpha(opacity=40);
+        margin:0px;
+        padding:0px;
+        display:none;
+    }   
+    */
+    
+    #anotherborder {
+        border: 1px solid #000;
+        background: #1673FF;
+        opacity: 0.5;
+        filter: alpha(opacity=50);
+        position: absolute;
+    }
+    
+    // Classes
+    .show {
+        display: block !important;
+    }
+    
+    .hide {
+        display: none;
+    }
+    /*.hidden {
+        display: none !important;
+    }*/
+    
+    .invisible {
+        visibility: hidden;
+    }
+    
+    // Usage as mixins
+    .element {
+        .show();
+    }
+    
+    .another-element {
+        .hidden();
+    }
+    
+    #notice {
+        border: 1px solid #f6f6f6;
+        border-radius: 10px;
+        top: 60px;
+        right: 1em;
+        position: absolute;
+        color: #000;
+        padding: 5px;
+        font-weight: bold;
+        background: #e7e7e7;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -o-user-select: none;
+        user-select: none;
+    }
+    
+    #forceNotice {
+        border: 1px solid #f6f6f6;
+        border-radius: 10px;
+        top: 60px;
+        left: 1em;
+        width: 22%;
+        position: absolute;
+        color: #000;
+        padding: 5px;
+        //font-weight: bold;
+        background: #e7e7e7;
+        overflow: auto;
+    }
+    
+    #fruchtermanNotice {
+        border: 1px solid #f6f6f6;
+        border-radius: 10px;
+        top: 60px;
+        left: 1em;
+        width: 22%;
+        position: absolute;
+        color: #000;
+        padding: 5px;
+        // font-weight: bold;
+        background: #e7e7e7;
+        overflow: auto;
+    }
+    
+    #thresholdChange {
+        border: 1px solid #f6f6f6;
+        border-radius: 10px;
+        top: 60px;
+        left: 1em;
+        width: 22%;
+        position: absolute;
+        color: #000;
+        padding: 5px;
+        // font-weight: bold;
+        background: #e7e7e7;
+        overflow: auto;
+    }
+    
+    #addNodeSpecifications {
+        display: none;
+        position: absolute;
+        top: 50px;
+        //left: 35%;
+        width: 22%;
+        height: 600px;
+        padding: 16px;
+        // border: 1px solid #000; //#e6e6e6;
+        border-radius: 4px;
+        background-color: #f5f5f5;
+        z-index: 1000;
+        overflow: auto;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+    
+    #addEdgeSpecifications {
+        display: none;
+        position: absolute;
+        top: 50px;
+        //left: 35%;
+        width: 22%;
+        //height: 600px;
+        padding: 16px;
+        // border: 1px solid #000; //#e6e6e6;
+        border-radius: 4px;
+        background-color: #f5f5f5;
+        z-index: 1000;
+        overflow: auto;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+    /*#addNodePreview {
+    display: none;
+    position: absolute;
+    bottom: 10px;
+    padding: 16px;
+    height: 200px;
+    width: 265px;
+    background-color: #fff;
+    z-index: 1001;
+    border: 2px solid #000;
+    overflow: auto;
+} */
+    
+    #someTool {
+        display: none;
+        border: 1px solid #f6f6f6;
+        border-radius: 10px;
+        bottom: 1em;
+        right: 1em;
+        position: absolute;
+        color: #000;
+        padding: 10px;
+        font-weight: bold;
+        background: #e7e7e7;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -o-user-select: none;
+        user-select: none;
+    }
+    
+    #extraTool {
+        display: none;
+        border: 1px solid #f6f6f6;
+        border-radius: 6px;
+        top: 60px;
+        right: 15em;
+        position: absolute;
+        color: #fff;
+        padding: 5px;
+        font-weight: bold;
+        background: #5bc0de; //#e7e7e7;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -o-user-select: none;
+        user-select: none;
+    }
+    
+    #errorMessage {
+        display: none;
+        border-radius: 10px;
+        bottom: 1em;
+        right: 1em;
+        position: fixed;
+        color: #000;
+        padding: 10px;
+        z-index: 1000;
+        font-weight: bold;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -o-user-select: none;
+        user-select: none;
+        //  background: #fff;
+    }
+    
+    #zoomContainer {
+        //  border: 1px solid #000;
+        border-radius: 6px;
+        top: 120px;
+        right: 1em;
+        position: absolute;
+    }
+    
+    #zoomContainer2 {
+        //  border: 1px solid #000;
+        border-radius: 6px;
+        top: 220px;
+        right: 1em;
+        position: absolute;
+    }
+    
+    #zoomContainerCenter {
+        border-radius: 6px;
+        top: 170px;
+        right: 1em;
+        position: absolute;
+    }
+    /*
+    #filter-pane {
+        bottom: 10px;
+        right: 10px;
+        width: 250px;
+        position: absolute;
+        background: #e6e6e6;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    } */
+    
+    #filter-pane {
+        top: 50px;
+        //left: 35%;
+        height: 600px;
+        position: absolute;
+        //border: 1px solid #000;//#e6e6e6;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        background: #e6e6e6;
+        z-index: 1000;
+        overflow: auto;
+    }
+    
+    #filter-pane > div {
+        margin: 10px;
+        overflow-x: auto;
+    }
+    
+    .bottomAligned {
+        position: absolute;
+        bottom: 0%;
+        right: 0%;
+    }
+    
+    <!-- This area is that location area -->
+    /* .line {
+      clear: both;
+      display: block;
+      width: 100%;
+      margin: 0;
+      padding: 12px 0 0 0;
+      border-bottom: 1px solid #aac789;
+      background: transparent;
+    } */
+    
+    h2,
+    h3,
+    h4 {
+        padding: 0;
+        font-size: 14px;
+    }
+    
+    .green {
+        color: #437356;
+    }
+    
+    p.underline {
+        color: #fff;
+        background: #3a5795;
+        margin: 0;
+        border-radius: 2px;
+        padding: 8px 12px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+    
+    .hidden {
+        display: none;
+        // visibility: hidden;
+    }
+    
+    input[type=range] {
+        width: 160px;
+    }
+    
+    .black_overlay {
+        display: none;
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        width: 100%;
+        height: 100%;
+        background-color: black;
+        z-index: 1001;
+        -moz-opacity: 0.8;
+        opacity: .80;
+        filter: alpha(opacity=80);
+    }
+    
+    .white_content {
+        display: none;
+        position: absolute;
+        top: 25%;
+        left: 35%;
+        width: 35%;
+        height: 60%;
+        padding: 16px;
+        border: 2px solid #000;
+        border-radius: 10px;
+        background-color: white;
+        z-index: 1002;
+        overflow: auto;
+    }
+    
+    .selectedNodesBox {
+        display: none;
+        position: absolute;
+        top: 50px;
+        //left: 35%;
+        width: 22%;
+        height: 600px;
+        padding: 16px;
+        //border: 1px solid #000;//#e6e6e6;
+        border-radius: 4px;
+        background-color: #f5f5f5;
+        z-index: 1000;
+        overflow: auto;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+    
+    .specificNodesBox {
+        display: none;
+        position: absolute;
+        top: 50px;
+        //left: 35%;
+        width: 22%;
+        height: 600px;
+        padding: 16px;
+        //  border: 10px solid #000;//#e6e6e6;
+        border-radius: 4px;
+        background-color: #f5f5f5;
+        z-index: 1000;
+        overflow: auto;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+    
+    .multipleNodesBox {
+        display: none;
+        position: absolute;
+        top: 50px;
+        //left: 35%;
+        width: 22%;
+        height: 600px;
+        padding: 16px;
+        //border: 1px solid #000;//#e6e6e6;
+        border-radius: 4px;
+        background-color: #f5f5f5;
+        z-index: 1000;
+        overflow: auto;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+    
+    .nodeBoxContainer {
+        position: absolute;
+        overflow: auto;
+    }
+    
+    .selectedNodeBox {
+        display: none;
+        position: absolute;
+        top: 8%;
+        width: 22%;
+        left: 22.5%; //308px;
+        height: 300px;
+        //border: 1px solid #000;//#e6e6e6;
+        padding: 16px;
+        border-radius: 4px;
+        background-color: #f5f5f5;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+    
+    .line-separator {
+        height: 1px;
+        background-color: #e6e6e6;
+        border-bottom: 1px solid #313030;
+    }
+    
+    .submitChanges {
+        position: absolute;
+        bottom: 1em;
+        right: 1em;
+    }
+    
+    #nodeRatioSize {
+        //display: none;
+        position: absolute;
+        bottom: 1em;
+        left: 1%;
+        height: auto;
+        border: 1px solid #f5f5f5;
+        width: 15%;
+        padding: 16px;
+        border-radius: 4px;
+        background-color: #f5f5f5;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+    #containerFile {
+    	position: absolute;
+    	vertical-align: middle;
+    	overflow: auto;
+    	display: none;
+    	top:25%;
+  		left:30%;
+  		padding: 12px;
+    	background-color: #e6e6e6;
+    	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    	width: 600px;
+    	height: 300px;
+    }
+    
+    <!-- I have added a width size in dashboard.css to .sidebar. This increased it to 300px. -->
+    </style>
+    <div id="graph-container"></div>
+    <div id="notice" id="noticeBox" class="">
+        <p id="noticeBox">
+            <p> Nodes: <span class="badge" id="nodeBadge"></span> Edges: <span class="badge" id="edgeBadge"></span></p>
+    </div>
+    <div id="extraTool">
+        <p>
+            <p id="extraToolBox"></p>
+        </p>
+    </div>
+    <div id="forceNotice" class="hidden">
+        <p>Force Atlas2</p>
+        <!-- <div>
+        <p> linLogMode <input type="checkbox" id="linLogMode"> </p>
+        </div>
+        <br>
+        <div>
+        <p> outboundAttractionDistribution <input type="checkbox" id="outboundAttractionDistribution"> </p>
+        </div>
+        <br>
+        <div>
+        <p> Adjust Node Size <input type="checkbox" id="adjustNode"> </p>
+        </div>
+        <br>
+        <div>
+        <p> Stronger Gravity <input type="checkbox" id="adjustNode"> </p>
+        </div>
+        <br>
+        <div>
+        <p> Barnes Hut Optimize <input type="checkbox" id="adjustNode"> </p>
+        </div>
+        <br> -->
+        <button type="button" class="btn btn-default" id="forceAtlasStart">Start</button>
+        <button type="button" class="btn btn-default" id="forceAtlasStop">Stop</button>
+    </div>
+    <div id="fruchtermanNotice" class="hidden">
+        <p> Fruchterman </p>
+        <button type="button" class="btn btn-default" id="fruchtermanStart">Start</button>
+    </div>
+    <div id="zoomContainer">
+        <button type="button" class="btn btn-default btn-lg" id="zoomingIn">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        </button>
+    </div>
+    <div id="zoomContainerCenter">
+        <button type="button" class="btn btn-default btn-lg" id="zoomingCenter">
+            <span class="glyphicon glyphicon-record" aria-hidden="true"></span>
+        </button>
+    </div>
+    <div id="zoomContainer2">
+        <button type="button" class="btn btn-default btn-lg" id="zoomingOut">
+            <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+        </button>
+    </div>
+    <div id="light" class="white_content">
+        <li>
+            <p role="button" align="right" id="appearWindow">&#10060;</p>
+        </li>
+        <!-- Start of light container -->
+        <p> </p>
+    </div>
+    <!-- End of light container -->
+    <div id="fade" class="black_overlay"></div>
+    <!-- Node Ratios here -->
+    <!-- Node ratio size. Allows me to change the size of the nodes.  -->
+    <!-- <div id="nodeRatioSize">
+        <p> Node Ratio </p>
+        <input id="nodeRatio" type="range" min="0" value="90"> 90
+    </div> -->
+    <div id="specificNode" class="specificNodesBox">
+        <p role="button" align="right" id="closeSpecificNodeBox">&#10060;</p>
+        <h3> Selected Node: </h3>
+        <div>
+            <p>Hide:
+                <input type="checkbox" id="hideBox" onChange="hide()"> Zoom In:
+                <input type="checkbox" id="nodeZoomIn" onChange="nodeZoom()">
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">Node Label</span>
+                    <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon1" id="nodelabel">
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon2">Node Size  </span>
+                    <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon2" id="nodesize">
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon3">Node Color</span>
+                    <input value="colorChange" class="form-control jscolor {onFineChange:'colorNode(this)'}" aria-describedby="basic-addon3" id="colorBox">
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon4">Tags    </span>
+                    <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon4" id="nodetag">
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon5">Description    </span>
+                    <textarea class="form-control" rows="3" placeholder="" value="" id="nodedesc"></textarea>
+                </div>
+                <br>
+                <ul id="attributeArrayItems">
+                </ul>
+        </div>
+        <div id="selectedEdgeMenu" /*class="hidden" */>
+        <h3> Selected Edge: </h3>
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">Edge Label</span>
+            <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon1" id="edgelabel">
+        </div>
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon2">Edge Size  </span>
+            <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon2" id="edgesize">
+        </div>
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon3">Edge Color</span>
+            <input value="#666" class="form-control jscolor {onFineChange:'colorEdge(this)'}" aria-describedby="basic-addon3" id="colorEdgeBox">
+        </div>
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon4">Type    </span>
+            <select id="edgeTypeList" class="form-control" onChange="dynamicEdge()">
+                <option id="line">Line</option>
+                <option id="curve">Curve</option>
+                <option id="arrow">Arrow</option>
+                <option id="curvedArrow">Curved Arrow</option>
+                <option id="angle">Right Angle</option>
+            </select>
+        </div>
+    </div>
+    </div>
+    <div id="nodeBox" class="multipleNodesBox">
+        <p role="button" align="right" id="closeNodeBox">&#10060;</p>
+        <h3> Nodes Selected: </h3>
+        <div class="line-separator"></div>
+        <br>
+        <div id="" style="overflow:auto; height:200px;">
+            <ul id="nodeBoxGroup" class="list-group ">
+            </ul>
+        </div>
+        <div class="line-separator"></div>
+        <br>
+        <!-- <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">Node Group Size  </span>
+            <input type="text" class="form-control" value="" placeholder="New Group Size" aria-describedby="basic-addon1" id="groupNodeSize">
+            
+        </div> -->
+        <br>
+        <div>
+            Node Group Size:
+            <button id="nodeShrink" type="button" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+            </button>
+            <button id="nodeEnlarge" type="button" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            </button>
+        </div>
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon2">Group Color</span>
+            <input value="#666" class="form-control jscolor {onFineChange:'groupNodeColor(this)'}" aria-describedby="basic-addon2" id="colorGroupBox">
+        </div>
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon3">Node Group Tag  </span>
+            <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon3" id="groupNodeTags">
+        </div>
+        <h3> Edges Selected: </h3>
+        <div class="line-separator"></div>
+        <br>
+        <div id="" style="overflow:auto; height:200px;">
+            <ul id="edgeBoxGroup" class="list-group ">
+            </ul>
+        </div>
+        <div class="line-separator"></div>
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">Edge Group Size  </span>
+            <input type="text" class="form-control" value="" placeholder="New Edge Group Size" aria-describedby="basic-addon1" id="groupEdgeSize">
+        </div>
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon2">Edge Group Color</span>
+            <input value="#666" class="form-control jscolor {onFineChange:'groupEdgeColor(this)'}" aria-describedby="basic-addon2" id="colorEdgeGroupBox">
+        </div>
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon3">Edge Group Tag  </span>
+            <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon3" id="groupEdgeTags">
+        </div>
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon3">Edge Group Type  </span>
+            <select id="groupEdgeType" class="form-control" onChange="groupEdgeTypeChange()">
+                <option id="edgeDefault" value="groupLine" selected>Line</option>
+                <option value="groupCurve">Curve</option>
+                <option value="groupArrow">Arrow</option>
+                <option value="groupCurvedArrow">Curved Arrow</option>
+                <option value="groupT">Right Angle</option>
+            </select>
+        </div>
+        <br>
+    </div>
+    <div id ="thresholdChange" class= "hidden">
+    <p role="button" align="right">   &#10060;      </p> 
+    <p> Label Threshold                    </p>
+    <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">Threshold Min</span>
+                    <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon1" id="selectedNodeLabel">
+                </div>
+                <br>
+        <p> Changes the minimum size a label should appear </p>
+        <br>
+        <br>
+        <br>
+    <div class='submitChanges'>
+                <button type="button" class="btn btn-primary" id='applyThresholdChanges'>Apply</button>
+            </div>
+    </div>
+    <!-- singleNodeBox -->
+    <div id="singleNodeBox" class="selectedNodeBox">
+        <!--<button type="button" class="btn btn-default btn-sm" id="previousSelected">
+                <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span> 
+                </button>
+        
+                <button type="button" class="btn btn-default btn-sm" id="nextSelected">
+                <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> 
+                </button> -->
+        <p role="button" align="right" id="closeSelectedNodeBox"> &#10060;
+            <p>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">Node Label</span>
+                    <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon1" id="selectedNodeLabel">
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">Node Size</span>
+                    <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon1" id="selectedNodeSize">
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">Tags</span>
+                    <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon1" id="selectedNodeTags">
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">Node Color</span>
+                    <input value=colorChange class="form-control jscolor {onFineChange:'specificColor(this)'}" id="selectedColorBox">
+                </div>
+    </div>
+    
+    <!-- Might need to move this due to the fact it is affecting the graph container -->
+    <div id="addNodeSpecifications">
+        <div>
+            <p id=closeAddNodeBox align="right" role="button"> &#10060; </p>
+        </div>
+        <h1 class="well">Node Attributes</h1>
+        <div id="addNodeSpecsBox">
+            <div id="specsBoxGroup">
+                <!-- <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">Label</span>
+         <input type="text" class="form-control" placeholder="" value="" aria-describedby="basic-addon1" id='specsLabel' >
+        </div>
+        <br> -->
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon2">Color</span>
+                    <input type="text" class="form-control jscolor {onFineChange:'specColor(this)'}" placeholder="" value="#666" aria-describedby="basic-addon2" id='specsColor'>
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon3">Size</span>
+                    <input type="text" class="form-control" placeholder="" value="5" aria-describedby="basic-addon3" id='specsSize'>
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon4">Tags</span>
+                    <input type="text" class="form-control" placeholder="" value="" aria-describedby="basic-addon4" id='specsTags'>
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon5">Description</span>
+                    <textarea class="form-control" rows="3" placeholder="" value="" id="specsDescription"></textarea>
+                </div>
+                <br>
+            </div>
+            <div>
+                <button type="button" id="moreSpecs" class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class='submitChanges'>
+                <button type="button" class="btn btn-primary" id='applyChanges'>Apply</button>
+            </div>
+            <!--    <div id="addNodePreview">
+        </div> -->
+        </div>
+    </div>
+    <div id="addEdgeSpecifications">
+        <div>
+            <p id=closeAddEdgeBox align="right" role="button"> &#10060; </p>
+        </div>
+        <h1 class="well">Edge Attributes</h1>
+        <div id="addEdgeSpecsBox">
+            <div id="edgeSpecsBoxGroup">
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon2">Color</span>
+                    <input type="text" class="form-control jscolor {onFineChange:'edgeSpecColor(this)'}" placeholder="" value="#666" aria-describedby="basic-addon2" id='edgeSpecsColor'>
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon2">Type</span>
+                    <select id="addEdgeSpecsType" class="form-control" onChange="dynamicEdge()">
+                        <option id="edgeDefault" value="line" selected>Line</option>
+                        <option value="curve">Curve</option>
+                        <option value="arrow">Arrow</option>
+                        <option value="curvedArrow">Curved Arrow</option>
+                        <option value="t">Right Angle</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- End of node specifications -->
+    <!-- End Single Node Box -->
+    <!-- Tool notification that appears then disappears -->
+    <div id="someTool">
+        <p id='someToolBox'> </p>
+    </div>
+    <div id="errorMessage">
+        <div class="alert alert-danger" role="alert">
+            <span class="sr-only">Error:</span>
+            <p id="nodeNotFound"> </p>
+        </div>
+    </div>
+    <!-- Filter panel -->
+    <div id="filter-pane" class="hidden">
+        <p class="underline">Filter</p>
+        <div>
+            <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" id="degreeButton">
+                Degree
+            </button>
+            <!-- <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" id="connectionButton">
+                Connections
+            </button> -->
+            <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" id="tagsButton">
+                Tags
+            </button>
+            <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" id="colorButton">
+                Color
+            </button>
+            <div class="input-group hidden">
+                <span class="input-group-addon">Choose Type.. </span>
+                <select id="filterType" data-target=".filterInfo" class="form-control">
+                    <option id='defaultFilter' value="" selected></option>
+                    <option value='Degrees' data-show='.degreeFilter'>Degree</option>
+                    <option value='Node ID' data-show='.nodeIdFilter'>Node ID</option>
+                    <option value='Node Tags' data-show='.nodeTagsFilter'>Node Tags</option>
+                    <option value='Connections' data-show='.connectedFilter'>Connections</option>
+                    <option value='Colors' data-show='.colorFilter'>Colors</option>
+                    <option value='Size' data-show='.sizeFilter'>Size</option>
+                </select>
+            </div>
+        </div>
+        <div class='filterInfo'>
+            <!-- Toggle Button Area -->
+            <div id="degreeFilterToggle" style="display:none">
+                <p> Degree of Nodes </p>
+                <input type="text" id="minValue" size="2"> and
+                <input type="text" id="maxValue" size="2">
+                <br>
+                <div>
+                    <br>
+                    <button type="button" id="applyDegree" class="btn btn-primary">
+                        Apply
+                    </button>
+                </div>
+            </div>
+            <br>
+            <div id="connectedFilterToggle" style="display:none">
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon4">Connected   </span>
+                    <select id="node-neighborhoods" class="form-control">
+                        <option id="noNeighbors"> No</option>
+                        <option id="yesNeighbors"> Yes </option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <div id="tagFilterToggle" style="display:none">
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon4">All Groups   </span>
+                    <select id="node-tags" class="form-control">
+                        <option value="" selected></option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <div id="colorFilterToggle" style="display:none">
+                <div class="input-group colorFilter">
+                    <span class="input-group-addon" id="basic-addon4">Color </span>
+                    <select id="node-color" class="form-control">
+                        <option value="" selected></option>
+                    </select>
+                </div>
+                <br>
+                <div>
+                    <div id="colorGroup">
+                    </div>
+                </div>
+            </div>
+            <!-- End Toggle Button Area -->
+            <div class='degreeFilter hidden'>
+                <p>Degree <span id="min-degree-val">0</span></p>
+                <!-- A headed number -->
+                <input id="min-degree" type="range" min="0" max="0" value="0"> <span id="max-degree-value"></span>
+                <br>
+                <!-- How are they getting the max number -->
+                <p> Degree of Nodes </p>
+                <input type="text" id="minValue" size="2"> and
+                <input type="text" id="maxValue" size="2">
+                <br>
+                <div>
+                    <br>
+                    <button type="button" id="applyDegree" class="btn btn-primary">
+                        Apply
+                    </button>
+                </div>
+            </div>
+            <div class="input-group nodeIdFilter hidden">
+                <span class="input-group-addon" id="basic-addon4">All Nodes    </span>
+                <select id="nodelist" class="form-control">
+                    <option value="" selected></option>
+                </select>
+            </div>
+            <!--    <div>
+         <h3> All Nodes </h3> <select id="nodelist"><option value="" selected> </option></select> 
+        </div> -->
+            <div class="input-group nodeTagsFilter hidden">
+                <span class="input-group-addon" id="basic-addon4">All Groups   </span>
+                <select id="node-tags" class="form-control">
+                    <option value="" selected></option>
+                </select>
+            </div>
+            <div class="connectedFilter hidden">
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon4">Connected   </span>
+                    <select id="node-neighborhoods" class="form-control">
+                        <option id="noNeighbors"> No</option>
+                        <option id="yesNeighbors"> Yes </option>
+                    </select>
+                </div>
+            </div>
+            <div class='colorFilter hidden'>
+                <div class="input-group colorFilter hidden">
+                    <span class="input-group-addon" id="basic-addon4">Color </span>
+                    <select id="node-color" class="form-control">
+                        <option value="" selected></option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <div class='sizeFilter hidden'>
+                <div class="input-group sizeFilter hidden">
+                    <span class="input-group-addon" id="basic-addon5">Size </span>
+                    <select id="node-size" class="form-control">
+                        <option value="" selected></option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <!--    <div>
+      <h3>Node Groups</h3>
+      <select id="node-tags">
+        <option value="" selected>All Groups</option>
+      </select>
+    </div> -->
+        </div>
+        <span class=".line"></span>
+        <div class="bottomAligned">
+            <button id="reset-btn" class="btn btn-default">Undo Filters</button>
+        </div>
+        <div id="dump" class="hidden"></div>
+    </div>
+    <div id ="containerFile" class="hidden">
+    <h1> For demo purposes </h1>
+      <button type="button" id="first" class="btn btn-primary">
+                        Colorized.gexf
+                    </button>
+                    <br>
+                    <br>
+                   <button type="button" id="second" class="btn btn-primary">
+                        Colorized2.gexf
+                    </button>
+                    <br>
+                    <br>
+                     <button type="button" id="fifth" class="btn btn-primary">
+                        Colorized5.gexf
+                    </button>
+                    <br> 
+                    <br> 
+                    <button type="button" id="sixth" class="btn btn-primary">
+                        smaller.gexf
+                    </button>
+                    <br>
+                    <br>
+                    <button type="button" id="seventh" class="btn btn-primary">
+                        ZackTwitter.gexf
+                    </button>  
+                    <br>
+                    <br>  
+                    <button type="button" id="eight" class="btn btn-primary">
+                        ZackTwitter2.gexf
+                    </button>
+                    <br> 
+                    <br> 
+                    <button type="button" id="ninth" class="btn btn-primary">
+                        CeejayTwitter.gexf
+                    </button> 
+
+    </div>
+    <!-- End of filters -->
+    </div>
+    <!--<canvas class="sigma-scene" width="2698" height="610px" style="position: absolute; width: 1349px; height: 305px;"></canvas>
+  <canvas class="sigma-labels" width="1349" height="305px" style="position: absolute; width: 1349px; height: 305px;"></canvas>
+  <canvas class="sigma-mouse" width="1349" height="305px" style="position: absolute; width: 1349px; height: 305px;"></canvas> -->
+    </div>
+    <!-- <div onmousedown="return false" id="YDR-Frame" class="frame"> Container for the first multiple selection box   -->
+    <div id="selection" class="selectiondiv"></div>
+    <!-- The container for the multiple selection box -->
+    </div>
+    <div id="anotherborder" hidden></div>
+    <div id="status2" </div>
+        <!-- Bootstrap core JavaScript
+    ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script>
+        window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')
+        </script>
+        <script src="../../Bootstrap/bootstrap/dist/js/bootstrap.min.js"></script>
+        <!-- IMPORTANT THIS HAS BEEN UPDATED -->
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+        <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+        <!-- SigmaJS Imports -->
+        <script src="../sigma.core.js"></script>
+        <script src="../conrad.js"></script>
+        <script src="../utils/sigma.utils.js"></script>
+        <script src="../utils/sigma.polyfills.js"></script>
+        <script src="../sigma.settings.js"></script>
+        <script src="../classes/sigma.classes.dispatcher.js"></script>
+        <script src="../classes/sigma.classes.configurable.js"></script>
+        <script src="../classes/sigma.classes.graph.js"></script>
+        <script src="../classes/sigma.classes.camera.js"></script>
+        <script src="../classes/sigma.classes.quad.js"></script>
+        <script src="../classes/sigma.classes.edgequad.js"></script>
+        <script src="../captors/sigma.captors.mouse.js"></script>
+        <script src="../captors/sigma.captors.touch.js"></script>
+        <script src="../renderers/sigma.renderers.canvas.js"></script>
+        <script src="../renderers/sigma.renderers.webgl.js"></script>
+        <script src="../renderers/sigma.renderers.svg.js"></script>
+        <script src="../renderers/sigma.renderers.def.js"></script>
+        <script src="../renderers/webgl/sigma.webgl.nodes.def.js"></script>
+        <script src="../renderers/webgl/sigma.webgl.nodes.fast.js"></script>
+        <script src="../renderers/webgl/sigma.webgl.edges.def.js"></script>
+        <script src="../renderers/webgl/sigma.webgl.edges.fast.js"></script>
+        <script src="../renderers/webgl/sigma.webgl.edges.arrow.js"></script>
+        <script src="../renderers/canvas/sigma.canvas.labels.def.js"></script>
+        <script src="../renderers/canvas/sigma.canvas.hovers.def.js"></script>
+        <script src="../renderers/canvas/sigma.canvas.nodes.def.js"></script>
+        <script src="../renderers/canvas/sigma.canvas.edges.def.js"></script>
+        <script src="../renderers/canvas/sigma.canvas.edges.curve.js"></script>
+        <script src="../renderers/canvas/sigma.canvas.edges.arrow.js"></script>
+        <script src="../renderers/canvas/sigma.canvas.edges.curvedArrow.js"></script>
+        <script src="../renderers/canvas/sigma.canvas.edgehovers.def.js"></script>
+        <script src="../renderers/canvas/sigma.canvas.edgehovers.curve.js"></script>
+        <script src="../renderers/canvas/sigma.canvas.edgehovers.arrow.js"></script>
+        <script src="../renderers/canvas/sigma.canvas.edgehovers.curvedArrow.js"></script>
+        <script src="../renderers/canvas/sigma.canvas.extremities.def.js"></script>
+        <script src="../renderers/svg/sigma.svg.utils.js"></script>
+        <script src="../renderers/svg/sigma.svg.nodes.def.js"></script>
+        <script src="../renderers/svg/sigma.svg.edges.def.js"></script>
+        <script src="../renderers/svg/sigma.svg.edges.curve.js"></script>
+        <script src="../renderers/svg/sigma.svg.labels.def.js"></script>
+        <script src="../renderers/svg/sigma.svg.hovers.def.js"></script>
+        <script src="../middlewares/sigma.middlewares.rescale.js"></script>
+        <script src="../middlewares/sigma.middlewares.copy.js"></script>
+        <script src="../misc/sigma.misc.animation.js"></script>
+        <script src="../misc/sigma.misc.bindEvents.js"></script>
+        <script src="../misc/sigma.misc.bindDOMEvents.js"></script>
+        <script src="../misc/sigma.misc.drawHovers.js"></script>
+        <script src="../../plugins/sigma.plugins.relativeSize/sigma.plugins.relativeSize.js"></script>
+        <!-- End Sigma Imports -->
+        <script src="../../plugins/sigma.plugins.neighborhoods/sigma.plugins.neighborhoods.js"></script>
+        <script src="../../plugins/sigma.plugins.dragNodes/sigma.plugins.dragNodes.js"></script>
+        <script src="../../plugins/sigma.parsers.gexf/gexf-parser.js"></script>
+        <script src="../../plugins/sigma.parsers.gexf/sigma.parsers.gexf.js"></script>
+        <script src="../../plugins/sigma.plugins.filter/sigma.plugins.filter.js"></script>
+        <script src="../../plugins/sigma.exporters.svg/sigma.exporters.svg.js"></script>
+        <script src="../../plugins/sigma.layout.forceAtlas2/worker.js"></script>
+        <script src="../../plugins/sigma.layout.forceAtlas2/supervisor.js"></script>
+        <script src="../../plugins/sigma.plugins.animate/sigma.plugins.animate.js"></script>
+        <script src="../../plugins/sigma.renderers.parallelEdges/utils.js"></script>
+        <script src="../../plugins/sigma.renderers.parallelEdges/sigma.canvas.edges.curve.js"></script>
+        <script src="../../plugins/sigma.renderers.parallelEdges/sigma.canvas.edges.curvedArrow.js"></script>
+        <script src="../../plugins/sigma.renderers.parallelEdges/sigma.canvas.edgehovers.curve.js"></script>
+        <script src="../../plugins/sigma.renderers.parallelEdges/sigma.canvas.edgehovers.curvedArrow.js"></script>
+        <!-- Sigma Selection Test Import -->
+        <script src="../../plugins/sigma.plugins.nodesSelection/sigma.plugins.nodesSelection.js"></script>
+        <!--<script src="../../plugins/sigma.plugins.edgesSelection/sigma.plugins.edgesSelection.js"></script> -->
+        <!-- JSColor File -->
+        <script src="jscolor.js"></script>
+        <!-- Linkurious Imports -->
+        <script src="../../plugins/sigma.exporters.gexf/sigma.exporters.gexf.js"></script>
+        <script src="../../plugins/sigma.layouts.fruchtermanReingold/sigma.layout.fruchtermanReingold.js"></script>
+        <!-- <script src="../../plugins/sigma.plugins.locate/sigma.plugins.locate.js"></script> -->
+</body>
+<script>
+//   document.getElementById('nodeid').value = '';
+
+
+//   document.getElementById('nodecolor').option = 'Grey';
+//   document.getElementById('changeNodeSize').value = '';
+//   document.getElementById('colorTest').value = '';
+$("#graph-container").css({
+    "background-color": "f0f0f0"
+});
+$.support.transition = true;
+/*  A code push on the drive is the most recent build
+    Website 6 is the most recent version
+      
+       
+    TODO:
+       
+       Add A Node (Works, currently a bug where if you hit add node again, it adds another event listener.)
+       Remove a Node (Works)
+       Select a node (Works)
+       Create an edge (Works)
+       Remove an edge (Works)
+       Select an edge (Works)
+       Different node types  (Need to work on this)
+       Add node color (Works)
+       Add edge color (Works.  Need to add color wheel to this)
+       Edge Types (Works)
+       Multiple selection tool (Ceejay from what I remember is working on this)
+       Delete (Works, might need revision)
+       Edit Nodes (Finally works)
+       Multiple Node Delete (Need to work on this as well)
+       Website building (Working on it)
+       Filtering (Like categorizing colors, or size) (Currently working on it)
+       Zooming in and out (Works)
+       Locating certain nodes
+
+       
+       Rectangle Selection (There's a box that appears, an array that's filled with the nodes within the selection, but we need more)
+       Sizing Nodes (You can now change the size now)
+       Shortest Path (Need to work on this as well)
+       Coloring Nodes based on Neighbors (Hmm, might be a good idea to try)
+       Color Reset (Need to work on this as well)
+       Change Layout (All you need to work on is a style and that could easily be changed)
+       Toggle Node labels (Jquery can be used on this)
+       Change Node Label fonts (JQuery needs to be done on this)
+
+       Need to learn jQuery
+       Needa work on exception handling
+       
+       Try to get a way to display node ids and stuff (This seems to be one of the most difficult parts) So far this is done through the console.  Is there a way
+       to display this in the menus? e.data.node will help here.  
+       Really need Ceejay to be able to work on the menu for this, so I can display stuff on that side.  
+       
+       
+       
+       
+       NOTE: 
+       
+       In terms of saving, is there another way to save instead of saving to SVG?  Questions...with no answers.  
+       REFER to this for graph settings: https://github.com/jacomyal/sigma.js/wiki/Settings
+       REFER to this for graph API: https://github.com/jacomyal/sigma.js/wiki/Graph-API
+       
+       Will s.refresh(); cause problems to speed times? I'm getting fps lag whenever working on the project
+       
+       For a save state, maybe we could try using a JSON database to save the graph state?
+       
+       Check Linkurious as well for more sigma.js features.  It's built by someone else, but we can gain inspiration from them.
+       
+       For any linkurious plugins that are added to the website, they will need to be pulled from the linkurious git in order for them to work.  
+       The others need to know this if they need to be able to get any way around that.
+       
+       If there are any errors, please refer to the console.  If it's a plugin error, contact Marcangelo for details on that error.
+       
+       You can only draw edges from a node to itself with the use of the curved and curveArrow edges.  Line and Arrow Edges will not work.  
+       
+       Added a certain border type to: sigma.canvas.nodes.def.js
+        // Adding a border
+        context.lineWidth = node.borderWidth || 3;
+        context.strokeStyle = node.borderColor || '#fff';
+        context.stroke();
+       
+       ERRORS: 
+       
+       There is an error that occurs if a large amount of nodes and edges are erased.  This causes the renderer to crash and nothing else can be created.  
+       
+       Run Error in Selection Tool:  If you were to switch from selection tool to another function, it removes the sigma instances causing the saved
+                                     the saved events to be deleted and reverts the node back to its original size.  
+       
+    */
+/*
+    Following area involves a bunch of DOM elements.  I'll worry about this later as it could be useful
+*/
+
+
+var _ = {
+    $: function(id) { //all functions that have the specific value of id
+        return document.getElementById(id); //returns this for other code
+    },
+
+    all: function(selectors) { //any selectors
+        return document.querySelectorAll(selectors);
+    },
+
+    removeClass: function(selectors, cssClass) {
+        var nodes = document.querySelectorAll(selectors); //initializes a var called node for all selectors
+        var l = nodes.length;
+        for (i = 0; i < l; i++) {
+            var el = nodes[i];
+            // Bootstrap compatibility
+            el.className = el.className.replace(cssClass, '');
+        }
+    },
+
+    addClass: function(selectors, cssClass) {
+        var nodes = document.querySelectorAll(selectors);
+        var l = nodes.length;
+        for (i = 0; i < l; i++) {
+            var el = nodes[i];
+            // Bootstrap compatibility
+            if (-1 == el.className.indexOf(cssClass)) {
+                el.className += ' ' + cssClass;
+            }
+        }
+    },
+
+    show: function(selectors) {
+        this.removeClass(selectors, 'hidden');
+    },
+
+    hide: function(selectors) {
+        this.addClass(selectors, 'hidden');
+    },
+
+    toggle: function(selectors, cssClass) {
+        var cssClass = cssClass || "hidden";
+        var nodes = document.querySelectorAll(selectors);
+        var l = nodes.length;
+        for (i = 0; i < l; i++) {
+            var el = nodes[i];
+            //el.style.display = (el.style.display != 'none' ? 'none' : '' );
+            // Bootstrap compatibility
+            if (-1 !== el.className.indexOf(cssClass)) {
+                el.className = el.className.replace(cssClass, '');
+            } else {
+                el.className += ' ' + cssClass;
+            }
+        }
+    }
+};
+
+//making the variables global should fix any settings
+var s, //sigma graph canvas
+    i, //used as a counter-increment
+    id,
+    dom,
+    c, //c is our camera
+    nId = 0, //starts node count at 0
+    labelId = 0, //label id
+    edgeLabelId = 0,
+    nodeSize = 5,
+    nodeTags = [''],
+    nodeTagArray = [],
+    edgeTagArray = [],
+    nodeDescription = 'Just A Node',
+    sizeKeep,
+    createNode,
+    coordinates,
+    nodeArray,
+    nodeData,
+    nodeSizePrompt,
+    nodeColor,
+    len,
+    colour,
+    colorChange = '#666',
+    nodeType = 'def',
+    borderColor = '#666',
+    edgedef = 1,
+    edgeColor,
+    edgeColour,
+    edgeColourChange = '#666',
+    edgeSettings = 'line',
+    addingNode = false,
+    attributeName = [],
+    attributeArray = [],
+    newAttrCount = 1,
+    addNodeRepeat = false,
+    draggingNode = false,
+    deleteChosen = false,
+
+    eId = 0, //starts edge count at 0
+    nodesFound = [],
+    edgesFound = [],
+    multipleNodes = [],
+    multipleEdges = [],
+    groupNodes = [],
+    /*  nodes = [],
+        edges = [] */
+    g = {
+        nodes: [],
+        edges: []
+    };
+
+//making sigma global fixes our issues  
+s = new sigma({
+    //  graph: g,
+    renderer: {
+        //id: 'main',
+        container: document.getElementById('graph-container'),
+        type: 'canvas',
+
+    },
+    settings: { //this part is dealt with in another javascript by sigma
+        zoomMin: 0.0000001,
+        zoomMax: 50,
+        autoResize: true,
+        autoRescale: false,
+        mouseEnabled: true, //setting to this true allows you to hover over the input. Can also use it to drag node
+        touchEnabled: false, //not sure what this does so far
+        doubleClickEnabled: false,
+        //  fontStyle: "#bold",
+        minEdgeSize: 0.5,
+        maxEdgeSize: 5,
+        minNodeSize: 1,
+        maxNodeSize: 50,
+        enableHovering: true,
+        enableEdgeHovering: false, //allows for the mouse to be able to hover over an item.
+        edgeHoverSizeRatio: 1,
+        //  nodesPowRatio: 0.5,
+        edgeHoverColor: 'edge',
+        defaultEdgeHoverColor: '#000',
+        defaultEdgeType: edgeSettings,
+        edgeHoverExtremities: true,
+        borderSize: 1, //hover over size of a node
+        outerBorderSize: 5,
+        edgeLabelSize: 'fixed',
+        defaultNodeColor: '#666',
+        defaultNodeBorderColor: '#000',
+        defaultNodeType: nodeType,
+        minArrowSize: 7,
+        defaultLabelSize: 5,
+        labelSize: 'proportional',
+        labelThreshold: 15, //minimum node size for label to appeaer
+        hoverFontStyle: 'bold',
+        hideEdgesOnMove: 'true',
+        skipErrors: false
+            //  defaultNodeOuterBorderColor: 'rgb(236, 81, 72)'
+
+    }
+
+});
+
+sigma.utils.pkg('sigma.canvas.edges');
+
+sigma.canvas.edges.t = function(edge, source, target, context, settings) {
+    var color = edge.color,
+        prefix = settings('prefix') || '',
+        edgeColor = settings('edgeColor'),
+        defaultNodeColor = settings('defaultNodeColor'),
+        defaultEdgeColor = settings('defaultEdgeColor');
+
+    if (!color)
+        switch (edgeColor) {
+            case 'source':
+                color = source.color || defaultNodeColor;
+                break;
+            case 'target':
+                color = target.color || defaultNodeColor;
+                break;
+            default:
+                color = defaultEdgeColor;
+                break;
+        }
+
+    context.strokeStyle = color;
+    context.lineWidth = edge[prefix + 'size'] || 1;
+    context.beginPath();
+    context.moveTo(
+        source[prefix + 'x'],
+        source[prefix + 'y']
+    );
+    context.lineTo(
+        source[prefix + 'x'],
+        target[prefix + 'y']
+    );
+    context.lineTo(
+        target[prefix + 'x'],
+        target[prefix + 'y']
+    );
+    context.stroke();
+};
+
+
+sigma.renderers.def = sigma.renderers.canvas;
+document.getElementById('nodesize').value = '';
+document.getElementById('colorBox').value = colorChange;
+document.getElementById('colorEdgeBox').value = edgeColourChange;
+document.getElementById('hideBox').checked = false;
+document.getElementById('nodeZoomIn').checked = false;
+document.getElementById('edgesize').value = edgedef;
+document.getElementById('searchBar').value = '';
+//document.getElementById('groupNodeSize').value = '';
+document.getElementById('groupNodeTags').value = '';
+document.getElementById('colorGroupBox').value = '#' + colorChange;
+document.getElementById("defaultFilter").selected = true;
+document.getElementById("edgeDefault").selected = true;
+document.getElementById('specsSize').value = nodeSize;
+document.getElementById('specsColor').value = colorChange;
+document.getElementById('specsTags').value = nodeTags;
+document.getElementById('specsDescription').value = nodeDescription;
+/*these particular lines of code comes from the example.html.  Essentially, what it does is that 
+  whenever someone hovers over a node, it will reveal the contents of that node in the console
+  describes all parts of the node.  */
+
+dom = document.querySelector('#graph-container canvas:last-child'); //originally part of addNode    
+c = s.camera;
+console.log(c);
+var filter = new sigma.plugins.filter(s);
+document.getElementById('nodeBadge').innerHTML = 0;
+document.getElementById('edgeBadge').innerHTML = 0;
+//dom methods are actions you can perform all html elements are defined as objects
+
+
+/*  document.getElementById('export').onclick = function() { 
+  console.log('exporting...');
+  var output = s.toSVG({download: true, filename: 'graph.svg', size: 1000});
+  // console.log(output);
+}; */
+
+var div = document.getElementById('anotherborder'),
+    x1 = 0,
+    y1 = 0,
+    x2 = 0,
+    y2 = 0;
+
+function reCalc() { //This will restyle the div
+    var x3 = Math.min(x1, x2); //Smaller X
+    var x4 = Math.max(x1, x2); //Larger X
+    var y3 = Math.min(y1, y2); //Smaller Y
+    var y4 = Math.max(y1, y2); //Larger Y
+    div.style.left = x3 + 'px';
+    div.style.top = y3 + 'px';
+    div.style.width = x4 - x3 + 'px';
+    div.style.height = y4 - y3 + 'px';
+
+}
+
+var mouseclick = function(e) {
+    div.hidden = 0; //Unhide the div
+    x1 = e.clientX; //Set the initial X
+    y1 = e.clientY; //Set the initial Y
+    reCalc();
+}
+
+var mousemotion = function(e) {
+
+    x2 = e.clientX; //Update the current position X
+    y2 = e.clientY; //Update the current position Y
+    reCalc();
+}
+
+var mouseremove = function(e) {
+    //Hide the div
+    div.hidden = 1;
+}
+
+function dragNode() //should be able to drag around nodes with this
+{ //original example works.  Needa figure out how to correlate the two
+    s.unbind();
+    dom.removeEventListener('click', createNode, true);
+    s.settings({
+        enableHovering: true,
+        enableEdgeHovering: false
+    });
+    var dragListener = sigma.plugins.dragNodes(s, s.renderers[0]);
+    /*
+        dragListener.bind('clickNode', function(event) {
+            if (!event.data.node.center)
+                refreshGraph(event.data.node.id);
+        });
+    */
+
+    s.refresh();
+
+}
+
+function frame() {
+    s.refresh(); //going to need this 
+
+    if (s.graph.nodes().length) {
+        var w = dom.offsetWidth,
+            h = dom.offsetHeight;
+        var xMin = Infinity,
+            xMax = -Infinity,
+            yMin = Infinity,
+            yMax = -Infinity,
+            margin = 50,
+            scale;
+
+        s.graph.nodes().forEach(function(n) { //need this for each coordinate
+            xMin = Math.min(n.x, xMin);
+            xMax = Math.max(n.x, xMax);
+            yMin = Math.min(n.y, yMin);
+            yMax = Math.max(n.y, yMax);
+        });
+
+        xMax += margin;
+        xMin -= margin;
+        yMax += margin;
+        yMin -= margin;
+
+        scale = Math.min(
+            w / Math.max(xMax - xMin, 1),
+            h / Math.max(yMax - yMin, 1)
+        );
+
+        /*  c.goTo({ //removing the camera keeps the thing from bouncing around whenever you add a new node
+            x: (xMin + xMax) / 2, 
+            y: (yMin + yMax) / 2,
+            ratio: 1 / scale
+          });  */
+
+    }
+
+    //  requestAnimationFrame(frame);
+    frame();
+}
+
+/*
+    You can change the color of the node prior
+  */
+function specColor(jscolor) {
+    colorChange = '#' + jscolor;
+}
+
+function addNode() {
+
+    dom.removeEventListener('click', createNode, true);
+    dom.removeEventListener('mousemove', coordinates, false);
+
+    var x,
+        y,
+        p,
+        newSpec;
+
+    //attributeArray = [];
+
+    $("#closeAddNodeBox").click(function() {
+        $('#addNodeSpecifications').addClass('hidden');
+        $('#addNodeSpecifications').removeClass('show');
+        dom.removeEventListener('click', createNode, true);
+        $('#someTool').delay(500).fadeOut("fast");
+
+    });
+    $('#forceNotice').removeClass('show');
+    $('#forceNotice').addClass('hidden');
+    $('#fruchtermanNotice').removeClass('show');
+    $('#fruchtermanNotice').addClass('hidden');
+    /*
+        Something needs to be fixed here.  
+    */
+    s.settings({
+        enableHovering: false,
+        enableEdgeHovering: false
+    });
+    s.unbind();
+    sigma.plugins.killDragNodes(s);
+    document.getElementById('nodeBoxGroup').innerHTML = '';
+    document.getElementById('nodeBox').style.display = '';
+
+    $("#filter-pane").addClass('hidden');
+    $("#selectionMenu").addClass('hidden');
+    $('#forceNotice').addClass('hidden');
+    $('#addNodeSpecifications').removeClass('hidden');
+    $('#addNodeSpecifications').addClass('show');
+    $('#addEdgeSpecifications').addClass('hidden').removeClass('show');
+    //  $('#addNodePreview').addClass('show');
+
+    //  var specs = $('#specsBoxGroup > div').length;
+    //  console.log('Node Attributes Length: ' + $('#specsBoxGroup > div').length);
+
+    /*  $('#specsBoxGroup div').each(function(i)
+        {
+            attributeArray.push($(this).text() + $('#specsBoxGroup').val());
+            attributeArray[i] = attributeArray[i].trim();
+
+        });
+    */
+    //attempting something with autocomplete
+    /*var auto = completely(document.getElementById('searchBar'), {
+
+        color:'#000',
+    })
+
+    auto.options = ['test', 'test2', 'test3']; */
+
+
+    console.log("array length: " + attributeArray.length);
+
+
+    /*
+        This causes the input to have more than one instance.  I'll need to fix this later on. 
+        That's annoying as shit.  
+    */
+
+    c = s.camera; //Calls sigma Camera.  Necessary, but we also don't need it to keep panning to the new node instance
+
+
+
+    //what if you just put all elements of addNode into a saved area.  Have it create an element.  
+
+    createNode = function(test) {
+        s.refresh();
+        /*for(var i = 0; i < attributeArray.length; i++)
+        {
+            console.log("testing");
+        }*/
+
+        console.log("Node being added"); // So far, reads correctly, meaning that this function is waiting for a button press
+
+        x = sigma.utils.getX(test) - dom.offsetWidth / 2;
+        y = sigma.utils.getY(test) - dom.offsetHeight / 2;
+
+        p = c.cameraPosition(x, y); //gets a camera position
+        x = p.x; //this sets the current position for the nodes
+        y = p.y; //writes a node at the current mouse position
+
+
+
+        /*
+        So something here should work on helping to fix this.
+        We could use this to access the other parts of the node.  
+            
+        var newTest = {
+
+            poop: 'heh',
+            works: 'not really'
+        }; */
+        s.graph.addNode({ //found origin code in sigma.classes.graph.js
+            id: ++nId + '',
+            //label,
+            label: nId + '',
+            //label: (label = 'Node ' + (++labelId)),
+            x: x + Math.random() / 10,
+            y: y + Math.random() / 10,
+            //color,
+            color: colorChange,
+            //size,
+            size: nodeSize,
+            type: nodeType,
+            //  borderColor: colorChange, 
+            tag: nodeTags, //so this works as a way of adding a test
+            description: nodeDescription,
+            attributeArray
+            //trial
+
+        });
+        s.refresh();
+        /*
+                Under sigma.canvas.nodes.def.js
+
+                Add these under context.fill();
+                   // Adding a border
+                    context.lineWidth = node.borderWidth || 2;
+                    context.strokeStyle = node.borderColor || '#fff';
+                    context.stroke();
+            */
+        /*
+            This can change the opacity of the node
+            add after:
+            "context.fillStyle = node.color || settings('defaultNodeColor');"
+            
+            //adding opacity
+                context.globalAlpha = node.opacity || 1;
+
+        */
+
+        /*
+            There is currently a plugin that allows for relative size sigma.plugins.relativeSize.js
+        */
+        //  myNodeAttr: 'Text'
+
+        nodes = s.graph.nodes();
+        len = nodes.length;
+        document.getElementById('nodeBadge').innerHTML = len;
+
+        console.log(nodes);
+
+    }
+
+
+    /*
+
+        This is supposed to fix error handling.  I need to look into this to check how to change it.  
+    */
+
+    /*  nodeArray = function(){
+            s.graph.nodes().forEach(function(n) {
+                nodes.push(nId);
+                
+            });
+        } */
+
+    //finding an issue here.  When you click into add node, it creates a new instance, which seems to be an issue.  
+    //if (addingNode == true)
+    //  {
+
+    dom.addEventListener('click', createNode, true);
+    dom.addEventListener('mousemove', coordinates, false);
+    //  dom.addEventListener('click', nodeArray, true);
+
+    coordinates = function(test) {
+            mouseX = sigma.utils.getX(test);
+            mouseY = sigma.utils.getY(test);
+        }
+        //these are all part of dom = document.querySelector('#graph-container canvas:last-child');
+
+
+
+
+}
+
+
+
+/*
+    This function only seems to work under FireFox
+ */
+function edgeSpecColor(jscolor) {
+    edgeColourChange = '#' + jscolor;
+}
+
+function addEdge() {
+    s.settings({
+        enableHovering: true,
+        enableEdgeHovering: false
+    });
+    dom.removeEventListener('click', createNode, true);
+    dom.removeEventListener('click', nodeArray, true);
+    dom.removeEventListener('mousemove', coordinates, false);
+    document.getElementById('nodeBoxGroup').innerHTML = '';
+    document.getElementById('nodeBox').style.display = '';
+    $('#filter-pane').removeClass('show');
+    $('#filter-pane').addClass('hidden');
+    $('#addNodeSpecifications').removeClass('show');
+    $('#addNodeSpecifications').addClass('hide');
+    $('#forceNotice').addClass('hidden');
+    $('#addEdgeSpecifications').addClass('show').removeClass('hidden');
+    $('#forceNotice').removeClass('show');
+    $('#forceNotice').addClass('hidden');
+    $('#fruchtermanNotice').removeClass('show');
+    $('#fruchtermanNotice').addClass('hidden');
+
+    $("#closeAddEdgeBox").click(function() {
+        $('#addEdgeSpecifications').addClass('hidden').removeClass('show');
+        $('#someTool').delay(500).fadeOut('slow');
+        s.unbind();
+    });
+
+    //Unbinding in the beginning will remove any instances of other binds that you previously had.  
+    s.unbind();
+    //  s.refresh();
+    sigma.plugins.killDragNodes(s);
+
+
+    //  s.cameras = null; //not sure if this works lol
+
+    var i = 0,
+        src,
+        targ,
+        clickInterval = 0,
+        startEdge = false;
+
+    s.bind('clickStage', function(e) {
+        clickInterval = 0;
+        document.getElementById('someToolBox').innerHTML = 'Source:  ' + ', ' + '  Target: ';
+    });
+
+    //clickNode function for finding data of the nodes
+    s.bind('clickNode', function(e) {
+
+        clickInterval++;
+
+
+        if (clickInterval == 1) {
+
+            src = e.data.node.id;
+            srcName = e.data.node.label;
+            $(document).ready(function() {
+                $('#someTool').fadeIn();
+                document.getElementById('someToolBox').innerHTML = 'Source:  ' + srcName + ', ' + '  Target: ';
+
+            });
+
+        } else if (clickInterval == 2) {
+
+            targ = e.data.node.id;
+            targName = e.data.node.label;
+            $(document).ready(function() {
+                document.getElementById('someToolBox').innerHTML = 'Source:  ' + srcName + ', ' + '  Target: ' + targName;
+                $('#someTool').fadeOut(500);
+            });
+
+
+            startEdge = true;
+        }
+        if (startEdge == true) {
+            //if this is not adding a second edge to the area.  Then that means that the addNode method isn't the part that's duplicating nodes.  Needa look into this
+
+            clickInterval = 0;
+            s.graph.addEdge({ //takes the two ids from the selected nodes and creates an edge between the two
+                id: 'e' + (++eId) + '',
+                label: (label = 'Edge ' + (++edgeLabelId)),
+                source: id = src,
+                target: id = targ,
+                size: edgedef,
+                type: edgeSettings, //What this does is change the edge type into a curve 
+                color: edgeColourChange,
+                hover_color: '#000',
+                //count: i = (++i),
+                definition: 'edge'
+                    //edges: []
+            });
+            startEdge = false;
+            edges = s.graph.edges();
+
+            edgeLen = edges.length;
+            document.getElementById('edgeBadge').innerHTML = edgeLen;
+
+            s.refresh();
+            nodes = s.graph.nodes();
+
+            /*
+                Need to fix this because if the size of the bigger node is much greater, the other node matches that original size
+            */
+            /*
+            for (var d = 0; d < nodes.length; d++) {
+                var degree = s.graph.degree(nodes[d].id);
+                if (degree == 0) {
+                    nodes[d].size = nodes[d].size;
+                    s.refresh();
+                } else {
+                    nodes[d].size = nodeSize * Math.sqrt(degree);
+                    s.refresh();
+                }
+            }
+            */
+
+            //  s.refresh();
+
+            /*
+                In sigma.canvas.edges.def.js add these lines under context.strokeStyle = color;
+                //adding opacity
+                context.globalAlpha = edge.opacity || 1; 
+            */
+
+            /*
+                in the parallel edges plugin, modify the two renderers to be able to contain opacity.  Otherwise they won't turn opaque
+            */
+        }
+
+    });
+
+    s.refresh();
+
+}
+
+
+function selection() {
+
+    /* The four following bind events let you know when an event has started pertaining the particular sigma functions */
+
+    /*  s.bind('overNode outNode clickNode doubleClickNode rightClickNode', function(e) {
+        console.log(e.type, e.data.node.label, e.data.captor); 
+        });
+    s.bind('overEdge outEdge clickEdge doubleClickEdge rightClickEdge', function(e) {
+        console.log(e.type, e.data.edge, e.data.captor);
+        });
+    s.bind('clickStage', function(e) {
+        console.log(e.type, e.data.captor);
+        });
+    s.bind('doubleClickStage rightClickStage', function(e) {
+        console.log(e.type, e.data.captor);
+        });
+    
+*/
+    //  document.getElementById("noticeBox").innerhtml = "Selction Tool Picked";
+    $('#forceNotice').removeClass('show');
+    $('#forceNotice').addClass('hidden');
+    $('#fruchtermanNotice').removeClass('show');
+    $('#fruchtermanNotice').addClass('hidden');
+    s.settings({
+        enableEdgeHovering: false,
+        enableHovering: false,
+        hideEdgesOnMove: true
+    });
+    document.getElementById('nodeBoxGroup').innerHTML = '';
+    document.getElementById('nodeBox').style.display = '';
+
+    s.unbind();
+
+
+    sigma.plugins.killDragNodes(s);
+    dom.removeEventListener('click', createNode, true);
+    dom.removeEventListener('mousemove', coordinates, false);
+    $('#filter-pane').addClass('hidden');
+    $('#forceNotice').addClass('hidden');
+    $('#addNodeSpecifications').addClass('hidden');
+
+    $('#closeSpecificNodeBox').click(function() {
+        $('#specificNode').addClass('hidden');
+        $('#specificNode').removeClass('show');
+    })
+    s.bind('clickNode', function nodeData(e) {
+
+            nodeAttributes(e);
+        }
+
+    ); //working on this
+
+    s.bind('clickEdge', edgeAttributes);
+
+    var menuToggle = function() {
+        //  $("#selectionMenu").removeClass('show');
+        //  $("#selectionMenu").addClass('hide');
+        $('#specificNode').removeClass('show');
+        $('#specificNode').addClass('hide');
+        $("#selectedEdgeMenu").removeClass('show');
+        $("#selectedEdgeMenu").addClass('hide');
+
+    }
+    s.bind('clickStage', menuToggle);
+
+    s.refresh();
+}
+
+
+/*
+    Newer multiple select
+ 
+ */
+
+function selectMultiple() {
+
+    var edgeSelected = [];
+    var selectedDragNodes = [],
+        selectedDrag = [];
+    document.getElementById('nodeBoxGroup').innerHTML = '';
+    document.getElementById('edgeBoxGroup').innerHTML = '';
+    document.getElementById('nodeBox').style.display = '';
+    dom.removeEventListener('mousedown', mouseclick);
+    dom.removeEventListener('mousemove', mousemotion);
+    dom.removeEventListener('mouseup', mouseremove);
+    dom.removeEventListener('mousemove', coordinates, false);
+    $('#filter-pane').addClass('hidden');
+    $('#forceNotice').addClass('hidden');
+    $('#addNodeSpecifications').addClass('hidden');
+    div.hidden = 1;
+    s.settings({
+        enableHovering: false,
+        enableEdgeHovering: false
+    })
+    dom.removeEventListener('click', createNode, true);
+
+    var dragListener = sigma.plugins.dragNodes(s, s.renderers[0]);
+
+    s.unbind();
+
+    multipleNodes = [];
+    multipleEdges = [];
+    $('#selectionButton').click(function() {
+        dom.removeEventListener('mousedown', mouseclick);
+        dom.removeEventListener('mousemove', mousemotion);
+        dom.removeEventListener('mouseup', mouseremove);
+        div.hidden = 1;
+    });
+
+
+    dom.addEventListener('mousedown', mouseclick);
+    dom.addEventListener('mousemove', mousemotion);
+    dom.addEventListener('mouseup', mouseremove);
+
+    /* So this registers each one, however, it doesn't seem to show a selected node thingy 
+       I do believe that it's at least registering the nodes, but I needa check into it some  
+       more.  
+    */
+
+
+    var selectedNodesInside = function(err, selectedNodes) {
+
+
+
+        dragListener.bind('startdrag', function(event) {
+            console.log(event);
+            // selectedDragNodes = [];
+            selectedDrag = event.data.node;
+            console.log(selectedDrag);
+            for (var i = 0; i < selectedNodes.length; i++) {
+                //  selectedNodes.forEach(function(part, index) {
+                if (selectedNodes[i].label != selectedDrag.label) {
+                    selectedDragNodes.push(selectedNodes[i]);
+
+                }
+            }
+
+            for (var i = 0; i < selectedDragNodes.length; i++) {
+
+                selectedDragNodes[i].alphaX = selectedDragNodes[i].x - selectedDrag.x;
+                selectedDragNodes[i].alphaY = selectedDragNodes[i].y - selectedDrag.y;
+            }
+
+            console.log(selectedDragNodes);
+
+        });
+        dragListener.bind('drag', function(event) {
+            //console.log(event);
+            // console.log(event.data.node.x);
+            // console.log(event.data.node.y);
+
+            selectedDragNodes.forEach(function(n) {
+                //so this is able to grab each node, and set there coordinates depending on the distance of the first node.  
+                n.x = selectedDrag.x + n.alphaX;
+                n.y = selectedDrag.y + n.alphaY;
+                s.refresh();
+                //console.log(n.x, n.y);
+            });
+            /*for (var i = 0; i < selectedDragNodes.length; i++)
+            {
+                selectedDragNodes[i].x = selectedDrag.x + selectedDragNodes[i].alphaX;  
+                selectedDragNodes[i].y = selectedDrag.y + selectedDragNodes[i].alphaY;
+            }
+            */
+            //so until i can figure out how to get the movement perfectly fine.  I'll have to keep this here until i figure out something else
+
+        });
+        /* 
+         dragListener.bind('drop', function(event) {
+             console.log(event);
+         }); */
+        dragListener.bind('dragend', function(event) {
+
+
+            //console.log(event);
+            selectedDragNodes = [];
+            selectedDrag = null;
+
+            s.refresh();
+        });
+
+        /*
+        var = document.getElementBy('something').value; //use this to get the label of the item.  
+        using the nodesFound array, we can obtain it's information that way.  
+        maybe index of?  
+
+        push the labels of the selectedNodes into the nodesFound array.  
+
+        var diff = $(old_array).not(new_array).get();
+        //  nodesFound = $(selectedNodes).not(nodes).get();
+    */
+        console.log('Just selected nodes');
+        console.log(selectedNodes);
+
+        //  multipleNodes = selectedNodes;
+        //console.log('Selected Nodes');
+
+
+        edges = s.graph.edges();
+        if (edges.length > 0) {
+            //console.log("entered");
+            //var source = selectedNodes(edges[])
+        }
+
+
+        var deleteNodes = [];
+        document.getElementById('colorGroupBox').value = '';
+        /*  selectedNodes.forEach(function(part, index)
+                {
+                    deleteNodes.push(part.id);
+                    console.log(deleteNodes);
+                }); */
+        $(document).on("keypress", function(event) {
+            if (event.keyCode == 46) {
+
+                s.graph.dropNode(deleteNodes);
+
+                nodes = s.graph.nodes();
+
+                len = nodes.length;
+                document.getElementById('nodeBadge').innerHTML = len;
+
+            }
+        });
+
+
+        dom.removeEventListener('mousedown', mouseclick);
+        dom.removeEventListener('mousemove', mousemotion);
+        dom.removeEventListener('mouseup', mouseremove);
+        div.hidden = 1;
+
+        if (selectedNodes.length >= 1) {
+            //sets all node opacity to half
+            s.graph.nodes().forEach(function(node) {
+
+            //    node.opacity = 0.5;
+
+            });
+
+            /*
+            Extracts values from nodes.  
+        
+        nodesFound = selectedNodes.map(function(a)
+        {
+
+            return a.tag;
+
+        })
+    
+        */
+
+            /*for (var i = 0; i < selectedNodes.length; i++)
+            {
+                if(selectedNodes[i].definition == 'edge' && edgeSelected.indexOf(selectedNodes[i]) == -1)
+                {
+                    edgeSelected.push(selectedNodes[i]);
+                    var newEdge = document.createElement("a");
+                    newEdge.className = "edgesSelected";
+                    newEdge.setAttribute("class", 'list-group-item');
+                    var t = document.createTextNode(selectedNodes[i].label);
+                    newEdge.appendChild(t);
+
+                    $("#edgeBoxGroup").append(newEdge);
+
+                }
+            }*/
+            for (var i = 0; i < selectedNodes.length; i++) {
+                if (selectedNodes[i].definition == 'edge' && edgeSelected.indexOf(selectedNodes[i]) == -1) {
+                    edgeSelected.push(selectedNodes[i]);
+                    multipleEdges.push(selectedNodes[i]);
+                } else if (multipleNodes.indexOf(selectedNodes[i]) == -1) {
+                    multipleNodes.push(selectedNodes[i]);
+
+                }
+            }
+            //console.log('worked');
+            //console.log(edgeSelected);
+            /*
+                Can change particular values of a function
+            */
+            selectedNodes.forEach(function(part, index) {
+                /*
+                    Curiously enough, you can use this to obtain the information of each node.  
+                */
+
+
+
+                //if(selectedNodes.hasOwnProperty('source'))
+                if (part.definition == 'edge') {
+                    var newEdge = document.createElement("a");
+                    newEdge.className = "edgesSelected";
+                    newEdge.setAttribute("class", 'list-group-item');
+                    var t = document.createTextNode(part.label);
+                    newEdge.appendChild(t);
+                    //  newEdge.onclick = function() {specificEdgeId(part)};
+                    $("#edgeBoxGroup").append(newEdge);
+                    newEdge.onclick = function() {
+                        specificEdgeId(part)
+                    };
+
+                    //  document.getElementById('edgeBox').style.display = 'block';
+                } else {
+
+                    var newNode = document.createElement("a");
+                    newNode.className = "nodesSelected";
+                    newNode.setAttribute("class", 'list-group-item');
+                    //  newNode.setAttribute("href", "#");
+                    var t = document.createTextNode(part.label);
+                    newNode.appendChild(t);
+                    //try obtaining nodes from the list
+                    newNode.onclick = function() {
+                        specificNodeId(part)
+                    };
+
+
+                    $("#nodeBoxGroup").append(newNode);
+                    document.getElementById('nodeBox').style.display = 'block';
+
+
+                    part.opacity = 1;
+
+                }
+
+                s.refresh();
+            });
+
+            /*
+    nodesFound = selectedNodes.map(function(a)
+        {
+
+            return a.tag;
+
+        })
+        console.log("new Result: ");
+        console.log(nodesFound);
+        console.log(selectedNodes); //as a result, this allowed the tags in the original array to be changed 
+    */
+
+            /*   dragListener.bind('clickNodes', function(event) {
+                   if (!event.data.node.center)
+                       refreshGraph(event.data.node.id);
+               }); */
+
+        } else {
+            dom.addEventListener('mousedown', mouseclick);
+            dom.addEventListener('mousemove', mousemotion);
+            dom.addEventListener('mouseup', mouseremove);
+            sigma.plugins.activateMouseEvents(s, selectedNodesInside);
+        }
+    }
+
+    /*  var selectedEdgesInside = function(err, selectedEdges)
+        {
+            console.log('Selected Edges');
+            console.log(selectedEdges);
+        }*/
+    sigma.plugins.activateMouseEvents(s, selectedNodesInside);
+    //  sigma.plugins.activateMouseEvents(s, selectedEdgesInside);
+
+    //  sigma.plugins.activateMouseEventsEdge(s, selectedEdgesInside);
+    var selectedEdgesInside = function(err, selectedEdges) {
+        console.log(selectedEdges);
+    }
+
+}
+
+function specificNodeId(part) {
+    /*nodesFound.forEach(function(part, index){
+        console.log(part.id);
+    }); */
+
+
+
+
+    /*  var clickedNode = $.grep(multipleNodes, function(n) {
+            return n.label == part.label;
+        }); */
+    nodesFound = [];
+    nodesFound = $.grep(nodes, function(n) { //returns an array of the objects with that specific id.  
+        return n.label == part.label;
+    });
+
+    var centerNode = nodesFound[0];
+
+    //so you can still look for specific parts of a node this way.
+    document.getElementById("selectedNodeLabel").value = part.label;
+    document.getElementById("selectedNodeSize").value = part.size;
+    document.getElementById("selectedNodeTags").value = part.tag;
+    document.getElementById("selectedColorBox").value = part.color;
+
+
+    /*
+    var singleNode = document.createElement("P");
+    singleNode.className = "singleNodeSelected";
+
+    var u = document.createTextNode(part.label);
+    singleNode.appendChild(u);
+
+    $("#singleNodeBox").append(singleNode); */
+    document.getElementById('singleNodeBox').style.display = 'block';
+
+
+    sigma.misc.animation.camera(
+        s.camera, {
+            x: centerNode.x,
+            y: centerNode.y,
+            ratio: 0.1
+        }, {
+            duration: s.settings('animationsTime') || 2000
+        }
+    )
+
+}
+
+/*function specificEdgeId(part)
+{
+    edgesFound = [];
+    edgesFound = $.grep(edges, function(n) { //returns an array of the objects with that specific id.  
+        return n.label == part.label;
+    });
+    console.log(part.type);
+} */
+
+function specificColor(jscolor) {
+    var specificNode = nodesFound[0];
+    document.getElementById("selectedColorBox").value = specificNode.color;
+
+    specificNode.color = "#" + jscolor;
+    specificNode.borderColor = '#' + jscolor;
+
+    s.refresh();
+}
+/*
+function groupNodeChanges()
+{
+    $.each(multipleNodes, function() {
+
+    })
+} */
+function groupNodeColor(jscolor) {
+    $.each(multipleNodes, function() {
+        this.color = "#" + jscolor;
+        this.borderColor = '#' + jscolor;
+
+    });
+    s.refresh();
+}
+
+function groupEdgeColor(jscolor) {
+    $.each(multipleEdges, function() {
+        this.color = '#' + jscolor;
+
+    });
+    s.refresh();
+}
+
+function groupEdgeTypeChange() {
+
+    console.log('running');
+    $("#groupLine").click(function(event) {
+        $.each(multipleEdges, function() {
+            part.type = 'line';
+
+        });
+        s.refresh();
+    });
+    $("#groupCurve").click(function(event) {
+        $.each(multipleEdges, function() {
+            part.type = 'curve';
+
+        });
+        s.refresh();
+    });
+    $("#groupArrow").click(function(event) {
+        $.each(multipleEdges, function() {
+            this.type = 'arrow';
+            s.refresh();
+        });
+    });
+    $("#groupCurvedArrow").click(function(event) {
+        $.each(multipleEdges, function() {
+            this.type = 'curvedArrow';
+            s.refresh();
+        });
+    });
+    $("#groupAngle").click(function(event) {
+        $.each(multipleEdges, function() {
+            this.type = 't';
+            s.refresh();
+        });
+    });
+
+    s.refresh();
+}
+
+function specificEdgeId(part) {
+    /*nodesFound.forEach(function(part, index){
+        console.log(part.id);
+    }); */
+
+
+
+
+    /*  var clickedNode = $.grep(multipleNodes, function(n) {
+            return n.label == part.label;
+        }); */
+    edgesFound = [];
+    edgesFound = $.grep(edges, function(n) { //returns an array of the objects with that specific id.  
+        return n.label == part.label;
+    });
+
+    console.log(part.type, part.color, part.source, part.target);
+
+    // var centerEdge = edgesFound[0];
+
+    //so you can still look for specific parts of a node this way.
+    //   document.getElementById("selectedEdgeLabel").value = part.label;
+    //  document.getElementById("selectedEdgeSize").value = part.size;
+    //  document.getElementById("selectedEdgeTags").value = part.tag;
+    //   document.getElementById("selectedEdgeBox").value = part.color;
+
+
+    /*
+    var singleNode = document.createElement("P");
+    singleNode.className = "singleNodeSelected";
+
+    var u = document.createTextNode(part.label);
+    singleNode.appendChild(u);
+
+    $("#singleNodeBox").append(singleNode); */
+    //   document.getElementById('singleEdgeBox').style.display = 'block';
+
+    /*
+        sigma.misc.animation.camera(
+                s.camera,
+                {
+                    x:centerNode.x,
+                    y:centerNode.y,
+                    ratio:0.1
+                },
+            {duration: s.settings('animationsTime') || 2000}
+        )
+        */
+}
+
+
+function deletion() {
+    /*
+        If you don't pull a s.refresh();, it causes the node to stay appeared so you'll need to refresh the graph otherwise it floats there.  
+    */
+    dom.removeEventListener('click', createNode, true);
+    s.settings({
+        enableHovering: false,
+        enableEdgeHovering: true
+    });
+    $("#selectionMenu").removeClass('show');
+    $("#selectionMenu").addClass('hide');
+    $("#selectedEdgeMenu").removeClass('show');
+    $("#selectedEdgeMenu").addClass('hide');
+    s.unbind();
+
+    s.bind('clickNode', function(e) {
+
+        s.graph.dropNode(e.data.node.id);
+        nodes = s.graph.nodes();
+
+        len = nodes.length;
+        document.getElementById('nodeBadge').innerHTML = len;
+
+        s.refresh();
+    });
+
+    s.bind('clickEdge', function(e) {
+        s.graph.dropEdge(e.data.edge.id);
+        edges = s.graph.edges();
+
+        edgeLen = edges.length;
+        document.getElementById('edgeBadge').innerHTML = edgeLen;
+        s.refresh();
+    });
+
+    s.refresh();
+}
+
+/*function nodeColorChange()
+ {
+
+
+//  var colorbox = document.getElementById("jscolor").value;
+//  console.log(colorbox);
+    s.unbind();
+//  s.refresh();
+    nodeColor = prompt("What Color are the nodes?", "Basic Color Here");
+    colour = 
+    String (nodeColor);
+    
+    console.log("User has changed node color to:", colour);
+    
+    colorChange = colour;
+    /*
+    if (colour == "White")
+    {
+        console.log("Node color changed to white");
+        colorChange = '#fff';
+    }
+    
+    if (colour == "Green")
+    {
+        console.log("Node color changed to Green");
+        colorChange = '#008000';
+    }
+    
+    if (colour == "Light Blue")
+    {
+        console.log("Node color changed to Light Blue");
+        colorChange = '#00BFFF';
+    }
+    */
+/*
+    s.bind('clickNode', function(e) {
+        var node = e.data.node; 
+        var changeInstant = confirm('Change color of node?');
+        
+        if (changeInstant == true)
+        {
+            nodeColor = prompt("What Color are the nodes?", "Basic Color Here");
+            console.log("nodeColor");
+            colour = 
+            String (nodeColor);
+            node.color = colour;
+        }
+        
+    });
+    
+
+    
+    
+ } */
+
+/*function edgeColorChange()
+ {
+    addingNode = false;
+    addNodeIncrement = 0;
+    s.unbind();
+//  s.refresh();
+    edgeColor = prompt("What color will the edges be?", "Basic Color Here");
+    edgeColour =
+    String (edgeColor);
+    
+    edgeColourChange = edgeColour;
+    
+ }*/
+/* 
+ function edgeType()
+ {
+    s.unbind();
+//  s.refresh();
+    addNodeIncrement = 0;
+    
+    var edgePrompt = prompt("What type of edge would you like?", "Line, Curve, Arrow, Curved Arrow");
+    var edgeChange = String (edgePrompt);
+    
+    edgeSettings = edgeChange;
+    
+    if (edgeChange == "Line")
+    {
+        console.log("Edge Type changed to Line");
+        edgeSettings = 'line';
+    }
+    if (edgeChange == "Curve")
+    {
+        console.log("Edge Type changed to Curve");
+        edgeSettings = 'curve';
+    }
+    if (edgeChange == "Arrow")
+    {
+        console.log("Edge Type changed to Arrow");
+        edgeSettings = 'arrow';
+    }
+    if (edgeChange == "Curved Arrow")
+    {
+        console.log("Edged Type changed to Curved Arrow");
+        edgeSettings = 'curvedArrow';
+    }
+    
+} */
+function edgeLine() {
+
+    edgeSettings = 'line';
+
+}
+
+function edgeCurve() {
+
+    edgeSettings = 'curve';
+
+}
+
+function edgeArrow() {
+
+    edgeSettings = 'arrow';
+
+}
+
+function edgeCurvedArrow() {
+
+    edgeSettings = 'curveArrow';
+
+}
+
+function edgeAngled() {
+
+    /*
+        One thing to note when using the angled version, you can't actually click on the edge.  Which is strange.
+        If you want to actually change it, the edge is actually a diagonal line that's invisible unless you hover over it.  
+    */
+    edgeSettings = 't';
+    console.log('Edge type changed to angled');
+}
+
+
+
+function nodeBorder() {
+
+
+    borderColor = '#000';
+    //  nodeType = 'border';
+    console.log('Node type changed to border');
+    colorChange = '#fff';
+}
+
+function nodeDef() {
+
+    borderColor = '#666';
+    colorChange = '#666';
+    nodeType = 'def';
+    console.log('Node type changed to def');
+}
+
+function clearGraph() {
+    $("#selectionMenu").addClass('hidden');
+    dom.removeEventListener('click', createNode, true);
+    dom.removeEventListener('click', nodeArray, true);
+    document.getElementById('nodeBadge').innerHTML = 0;
+    document.getElementById('edgeBadge').innerHTML = 0;
+    nodes = [];
+    edges = [];
+    nId = 0;
+    labelId = 0;
+    eId = 0;
+    edgeLabelId = 0;
+    filter.undo().apply();
+    s.graph.clear();
+    s.refresh();
+
+
+}
+
+function nodeAttributes(e) {
+    /*
+        The next two jquery functions will remove the hidden attribute to the container when a node is selected.  
+    */
+
+    //  $("#selectionMenu").removeClass('hidden');
+    //  $("#selectionMenu").addClass('show');
+    $('#specificNode').addClass('show');
+    $('#specificNode').removeClass('hidden');
+    var selectedNode = e.data.node;
+    node = e.data.node;
+    console.log(node);
+    document.getElementById('colorBox').value = node.color;
+    var attrCounter = 1;
+
+    /*if (e.data.node.attributeArray.length > 0 && attributeArray.length > 0) {
+        console.log(e.data.node.attributeArray);
+        var attrLength = attributeArray.length;
+        for (var i = 0; i < attrLength; i++) {
+            var str = attributeArray[i];
+            var splitted = str.split(':', 2);
+            console.log(splitted);
+            //this can create the part.  I want to be able to add the second part of the string into thse other part.  
+            $('#headingOne').append('<br>' + '<div class=' + '"input-group"' + '>' + '<span class=' + '"input-group-addon"' + '>' + splitted[0] +
+                '</span>' + '<input type=' + '"text"' + 'class=' + '"form-control"' + 'placeholder=' + '""' + 'aria-describedby=' + '"basic-addon3"' +
+                'id=attrExtra' + attrCounter + '>' + '</div>' + '<br>');
+
+            document.getElementById('attrExtra' + attrCounter).value = splitted[1];
+            attrCounter++;
+
+
+
+        }
+    } */
+
+    //  console.log(nodes);
+
+    /*
+        The following finds the nodes that are connected to that selected node.  
+    */
+    var neighbors = s.graph.neighborhood(node.id);
+
+
+   /* s.graph.nodes().forEach(function(node) {
+        //  node.originalOpacity = 1;
+        node.opacity = 0.2;
+    });
+
+    s.graph.edges().forEach(function(edge) {
+        //  edge.originalOpacity = 1;
+        edge.opacity = 0.2;
+    });
+    neighbors.nodes.forEach(function(node) {
+        //selectedNode.borderOpacity = 1;
+        //selectedNode.borderWidth = 4;
+        //selectedNode.borderColor = '#000';
+        node.opacity = 1;
+        selectedNode.opacity = 1;
+    });
+    neighbors.edges.forEach(function(edge) {
+        edge.opacity = 1;
+    });
+    var removeNeighbors = function(node) {
+        s.graph.nodes().forEach(function(node) {
+            node.opacity = 1;
+            selectedNode.opacity = 1;
+            //selectedNode.borderWidth = 2;
+            //selectedNode.borderColor = selectedNode.color;
+            s.refresh();
+
+        });
+
+*/
+        /*  neighbors.nodes.forEach(function(node)
+                {       
+                    selectedNode.size = node.originalSize;
+                    node.size =node.originalSize;       
+                }); 
+    /* } 
+    var removeNeighborEdges = function(edge) {
+        s.graph.edges().forEach(function(edge) {
+            edge.opacity = 1;
+        });
+    } */
+   // s.bind('clickNode', removeNeighbors);
+  //  s.bind('clickNode', removeNeighborEdges);
+  //  s.bind('clickStage', removeNeighbors);
+ //   s.bind('clickStage', removeNeighborEdges);
+    //  document.getElementById("nodeid").innerhtml = e.data.node.id;
+    document.getElementById("nodelabel").value = e.data.node.label;
+    //  document.getElementById("nodelabel").innerHTML = "Node Label: " + e.data.node.label;
+    document.getElementById("nodesize").value = e.data.node.size;
+    document.getElementById("nodetag").value = e.data.node.tag;
+    document.getElementById("nodedesc").value = e.data.node.description;
+
+    //in order to access the access array, we'll have to specify it by this instead.  
+
+    //  document.getElementById("nodesize").innerHTML = "Node Size: " + e.data.node.size;
+    //  document.getElementById("colorList").value = e.data.node.color;
+    //  document.getElementById("nodecolor").value = e.data.node.color;
+    //document.getElementById("nodecolor").innerHTML = "Node Color: " + e.data.node.color;
+    //  document.getElementById("nodetype").innerHTML = "Node Type: " + e.data.node.type;
+
+    s.refresh();
+    return node;
+}
+
+/*
+    Represents the attributes of the selected edge.  
+    Returns the edge selected.  
+ */
+function edgeAttributes(e) {
+
+
+    $("#selectedEdgeMenu").removeClass('hidden');
+    $("#selectedEdgeMenu").addClass('show');
+    //  document.getElementById("edgedef").innerHTML = edgeColourChange;
+    edge = e.data.edge;
+    console.log(edge);
+    //  document.getElementById("edgesource").innerHTML = "Edge Source: " + e.data.edge.source;
+    //  document.getElementById("edgetarget").innerHTML = "Edge Target: " + e.data.edge.target;
+    //  document.getElementById("edgeid").innerHTML = "Edge Id: " + e.data.edge.id;
+    document.getElementById("edgelabel").value = e.data.edge.label;
+    //  document.getElementById("edgelabel").innerHTML = "Edge Label: " + e.data.edge.label;
+    document.getElementById("edgesize").innerHTML = "Edge Size: " + e.data.edge.size;
+
+
+
+    return edge;
+}
+
+
+/*
+    JQuery of changing node attributes
+    Seems to be the most understandable of them all
+    These functions are activated when you click on a node.  
+    Need to be able to hide side bar when not in use.  
+*/
+$(document).ready(function(e) {
+
+    $('#specsSize').keyup(function(event) {
+        /*
+            For Chase, this particular part will take the value of a specific box, and then change a particular attribute based 
+            on that part.  You'll need to find the node in an array 
+
+            For most times the nodes are within nodes[].  merely finding the id will help you find the node.  
+        */
+        if (event.keyCode == 13) {
+            var x = document.getElementById("specsSize").value;
+            nodeSize = x;
+            s.refresh();
+        }
+
+    });
+    $('#specsTags').keyup(function(event) {
+        /*
+            For Chase, this particular part will take the value of a specific box, and then change a particular attribute based 
+            on that part.  You'll need to find the node in an array 
+
+            For most times the nodes are within nodes[].  merely finding the id will help you find the node.  
+        */
+        if (event.keyCode == 13) {
+            var x = document.getElementById("specsTags").value;
+            nodeTags.push(x);
+            if (nodeTagArray.indexOf(nodeTags) < 0) {
+                nodeTagArray.push(nodeTags);
+                console.log(nodeTagArray);
+            }
+            /* if (y = -1)
+             {
+             nodeTagArray.push(x);
+             console.log(nodeTagArray);
+              } */
+            s.refresh();
+        }
+
+    });
+    $('#specsDescription').keyup(function(event) {
+        /*
+            For Chase, this particular part will take the value of a specific box, and then change a particular attribute based 
+            on that part.  You'll need to find the node in an array 
+
+            For most times the nodes are within nodes[].  merely finding the id will help you find the node.  
+        */
+        if (event.keyCode == 13) {
+            var x = document.getElementById("specsDescription").value;
+            nodeDescription = x;
+            s.refresh();
+        }
+
+    });
+    $('#moreSpecs').click(function() {
+        /*
+            For chase: this particular part means you can create a div on the fly and specify the parts in it.  I do believe that you'll need 
+            to convert the cells in the table into text boxes.  So something in the cells need to be changed to be able to be changed out.  
+
+
+        */
+        console.log('entered');
+        newSpec = prompt("New Attribute", "");
+        if (newSpec !== '') {
+            $('#specsBoxGroup').append('<div class=' + '"input-group"' + '>' + '<span class=' + '"input-group-addon"' + '>' + newSpec +
+                '</span>' + '<input type=' + '"text"' + 'class=' + '"form-control"' + 'placeholder=' + '""' + 'aria-describedby=' + '"basic-addon3"' +
+                'id=attr' + newAttrCount + '>' + '</div>' + '<br>');
+
+            attributeName.push(newSpec);
+            console.log(attributeName);
+            newAttrCount++;
+
+        }
+
+    });
+
+    $('#applyChanges').click(function() {
+        var changes = '';
+        attributeArray = [];
+        for (var i = 1; i < newAttrCount; i++) {
+            changes = attributeName[i - 1] + ':' + $('#attr' + i).val();
+            attributeArray.push(changes);
+        }
+
+        dom.removeEventListener('click', createNode, true);
+        dom.addEventListener('click', createNode, true);
+    });
+    $('#nodeAdd').click(function() {
+        document.getElementById('someToolBox').innerHTML = 'Click anywhere to add a Node';
+        document.getElementById('extraToolBox').innerHTML = 'Add Node';
+        $('#extraTool').addClass('show'), $('#extraTool').removeClass('hidden');
+        $('#someTool').fadeIn("fast"); //.delay(500).fadeOut("slow");
+    });
+    $('#selectionButton').click(function() {
+        document.getElementById('someToolBox').innerHTML = 'Click on a Node to begin';
+        document.getElementById('extraToolBox').innerHTML = 'Selection';
+        $('#extraTool').addClass('show'), $('#extraTool').removeClass('hidden');
+        $('#someTool').fadeIn("fast"); //.delay(500).fadeOut("slow");
+    });
+    $('#edgeAdd').click(function() {
+        document.getElementById('someToolBox').innerHTML = 'Choose Source Node';
+        document.getElementById('extraToolBox').innerHTML = 'Add Edge';
+        $('#someTool').fadeIn("fast");
+    });
+    $('#multipleSelectButton').click(function() {
+        document.getElementById('someToolBox').innerHTML = 'Click and drag to begin';
+        document.getElementById('extraToolBox').innerHTML = 'Multiple Selection';
+        $('#extraTool').addClass('show'), $('#extraTool').removeClass('hidden');
+        $('#someTool').fadeIn("fast").delay(500).fadeOut("slow");
+    });
+    $('#deletionButton').click(function() {
+        document.getElementById('someToolBox').innerHTML = 'Click any node or edge to delete';
+        document.getElementById('extraToolBox').innerHTML = 'Deletion';
+        $('#extraTool').addClass('show'), $('#extraTool').removeClass('hidden');
+        $('#someTool').fadeIn("fast").delay(500).fadeOut("slow");
+    });
+    $('#filterButton').click(function() {
+            document.getElementById('extraToolBox').innerHTML = 'Filter';
+            $('#extraTool').addClass('show'), $('#extraTool').removeClass('hidden');
+        })
+        //Node Color
+    $("#colorTest").click(function test(e) {
+        var newColor = document.getElementById("colorList").value;
+        console.log(newColor);
+        node.color = newColor;
+        document.getElementById("nodecolor").value = node.color;
+    });
+    //Node Size Change.  Hitting enter would allow a change in size
+    $("#nodesize").keyup(function(event) {
+        if (event.keyCode == 13) {
+            var x = parseFloat(document.getElementById("nodesize").value);
+            node.size = x;
+
+            s.refresh();
+        }
+    });
+    //Node Label Change
+    $("#nodelabel").keyup(function(event) {
+        if (event.keyCode == 13) {
+            var x = document.getElementById("nodelabel").value;
+            node.label = x;
+            s.refresh();
+        }
+    });
+    $("#nodetag").keyup(function(event) {
+        if (event.keyCode == 13) {
+            var x = document.getElementById("nodetag").value;
+            var nodestag = node.tag;
+            nodestag.push(x);
+            //node.tag = x;
+            s.refresh();
+        }
+    });
+    $("#nodedesc").focusout(function(event) {
+
+        var x = document.getElementById("nodedesc").value;
+        node.description = x;
+        s.refresh();
+
+    });
+    $("#edgelabel").keyup(function(event) {
+        if (event.keyCode == 13) {
+            var x = document.getElementById("edgelabel").value;
+            edge.label = x;
+            s.refresh();
+        }
+    });
+    $("#edgesize").keyup(function(event) {
+        if (event.keyCode == 13) {
+            var x = parseFloat(document.getElementById("edgesize").value);
+            edge.size = x;
+
+            s.refresh();
+        }
+    });
+    /*  $("#forcestop").click(function(event){
+                s.stopForceAtlas2();
+                s.settings({drawEdges: true});
+                s.refresh();
+            });
+    */
+    $("#invertGraph").click(function(event) {
+
+        $("#graph-container").css({
+            "background-color": "#000"
+        });
+
+        s.settings({
+            defaultLabelColor: "#fff"
+        });
+        borderColor = '#fff';
+        colorChange = '#fff';
+        s.graph.nodes().forEach(function(n) {
+            n.borderColor = n.color;
+            //n.borderColor = '#fff';
+            if (n.color == '#000000' || '#000') {
+                n.borderColor = '#fff';
+                s.refresh();
+            }
+        });
+    });
+    $("#regularGraph").click(function(event) {
+        $("#graph-container").css({
+            "background-color": ""
+        });
+        s.settings({
+            defaultLabelColor: "#000"
+        });
+        colorChange = '#666';
+        borderColor = '#666';
+        s.graph.nodes().forEach(function(n) {
+            n.borderColor = n.color;
+            if (n.color == '#fff' || '#ffffff') {
+                n.borderColor = '#000';
+                s.refresh();
+            }
+        });
+    });
+
+    $('#searchBar').keyup(function(event) {
+        if (event.keyCode == 13) {
+            var x = document.getElementById("searchBar").value;
+
+            searchNode();
+        }
+    });
+    $("#appearBox").click(function(event) {
+
+        document.getElementById('light').style.display = 'block';
+        document.getElementById('fade').style.display = 'block';
+
+    });
+    $("#appearWindow").click(function(event) {
+
+        document.getElementById('light').style.display = 'none';
+        document.getElementById('fade').style.display = 'none';
+    });
+    $("#zoomingIn").click(function(event) {
+
+        sigma.misc.animation.camera(
+            s.camera, {
+                ratio: c.ratio * 0.085
+            }, {
+                duration: s.settings('animationsTime') || 2000
+            }
+        )
+    });
+    $("#zoomingOut").click(function(event) {
+        sigma.misc.animation.camera(
+            s.camera, {
+                ratio: c.ratio * 3
+            }, {
+                duration: s.settings('animationsTime') || 2000
+            }
+        )
+    });
+    $("#zoomingCenter").click(function(event) {
+        sigma.misc.animation.camera(c, {
+                x: 0,
+                y: 0,
+                ratio: 1
+
+            },
+
+            {
+                duration: s.settings('animationsTime') || 150
+            }
+        )
+    });
+
+    $("#closeNodeBox").click(function(event) {
+
+        //$("nodeBoxGroup").has('a[href="#"]').remove();
+        //$("li").remove(".nodesSelected");
+        sigma.plugins.killDragNodes(s);
+        document.getElementById('nodeBoxGroup').innerHTML = '';
+        document.getElementById('nodeBox').style.display = '';
+        s.graph.nodes().forEach(function(n) {
+            n.opacity = 1;
+            //  n.borderWidth = 2;
+            //  n.borderColor = n.color;
+            s.refresh();
+        });
+
+    });
+    $("#closeSelectedNodeBox").click(function(event) {
+
+        $("p").remove(".singleNodeSelected");
+        document.getElementById('singleNodeBox').style.display = '';
+
+    });
+    $("#selectedNodeLabel").keyup(function(event) {
+        if (event.keyCode == 13) {
+            var clickedNode = nodesFound[0];
+            var x = document.getElementById("selectedNodeLabel").value;
+            clickedNode.label = x;
+
+            s.refresh();
+        }
+    });
+
+    $("#selectedNodeSize").keyup(function(event) {
+        if (event.keyCode == 13) {
+            var clickedNode = nodesFound[0];
+            var x = parseFloat(document.getElementById("selectedNodeSize").value);
+            clickedNode.size = x;
+
+            s.refresh();
+        }
+    });
+
+    $("#selectedNodeTags").keyup(function(event) {
+        if (event.keyCode == 13) {
+            var clickedNode = nodesFound[0];
+            var x = document.getElementById("selectedNodeTags").value;
+            clickedNode.tag = x;
+
+            s.refresh();
+        }
+    });
+    $("#groupNodeSize").keyup(function(event) {
+        if (event.keyCode == 13) {
+            var x = parseFloat(document.getElementById("groupNodeSize").value);
+            $.each(multipleNodes, function() {
+                this.size = x;
+            });
+
+            s.refresh();
+        }
+    });
+    $("#groupNodeTags").keyup(function(event) {
+        if (event.keyCode == 13) {
+            var x = document.getElementById("groupNodeTags").value;
+            $.each(multipleNodes, function() {
+                this.tag = x;
+            });
+
+            s.refresh();
+        }
+    });
+
+    $("#groupEdgeTags").keyup(function(event) {
+        if (event.keyCode == 13) {
+            var x = document.getElementById("groupEdgeTags").value;
+            $.each(multipleEdges, function() {
+                this.tag = x;
+                console.log('hit');
+            });
+            var edgeTags = x;
+            if (edgeTagArray.indexOf(edgeTags) < 0) {
+                edgeTagArray.push(edgeTags);
+                console.log(edgeTagArray);
+            }
+            s.refresh();
+        }
+    })
+    $("#tableSet").click(function(event) {
+        $('#nodeTable tbody').empty();
+        $('#edgeTable tbody').empty();
+        var nodeTableAdd = document.getElementById('dataBody');
+        var edgeTableAdd = document.getElementById('dataEdgeBody');
+        s.graph.nodes().forEach(function(n) {
+            var insertNew = nodeTableAdd.insertRow(-1);
+            var cell = insertNew.insertCell(-1);
+
+            var cell2 = insertNew.insertCell(-1);
+            var cell3 = insertNew.insertCell(-1);
+            var cell4 = insertNew.insertCell(-1);
+            var cell5 = insertNew.insertCell(-1);
+            cell.innerHTML = n.id;
+            cell2.innerHTML = n.label;
+            cell3.innerHTML = n.size;
+            cell4.innerHTML = n.color;
+            cell5.innerHTML = n.tag;
+            //  document.getElementById('nodeTable').appendChild(nodeTableAdd);
+            // nodes = s.graph.nodes();
+        });
+        s.graph.edges().forEach(function(n) {
+            var newRow = edgeTableAdd.insertRow(-1);
+            var cell = newRow.insertCell(-1);
+            var cell2 = newRow.insertCell(-1);
+            var cell3 = newRow.insertCell(-1);
+            var cell4 = newRow.insertCell(-1);
+            var cell5 = newRow.insertCell(-1);
+
+            cell.innerHTML = n.id;
+            cell2.innerHTML = n.label;
+            cell3.innerHTML = n.source;
+            cell4.innerHTML = n.target;
+            cell5.innerHTML = n.color;
+
+        });
+
+    });
+    $("#hideAllEdges").click(function(event) {
+
+        s.settings({
+            drawEdges: false
+        });
+
+        s.refresh();
+
+    });
+    $("#unhideAllEdges").click(function(event) {
+
+        s.settings({
+            drawEdges: true
+        });
+
+        s.refresh();
+
+    });
+    $("#keepEdges").click(function(event) {
+
+        s.settings({
+            hideEdgesOnMove: false
+        });
+
+        s.refresh();
+
+    });
+    $("#hideAllLabels").click(function(event) {
+
+        s.settings({
+            drawLabels: false
+        });
+
+        s.refresh();
+
+    });
+    $("#unhideAllLabels").click(function(event) {
+
+        s.settings({
+            drawLabels: true
+        });
+
+        s.refresh();
+
+    });
+    $("#fixedLabels").click(function(event) {
+
+        s.settings({
+            labelSize: 'fixed'
+        });
+
+        s.refresh();
+
+    });
+    $("#proportionalLabels").click(function(event) {
+
+        s.settings({
+            labelSize: 'proportional'
+        });
+
+        s.refresh();
+
+    });
+    $("#hoveringOverEdges").click(function(event) {
+
+        s.settings({
+            enableEdgeHovering: true
+        });
+
+        s.refresh();
+
+    });
+    $("#hoveringOverEdgesDisabled").click(function(event) {
+
+        s.settings({
+            enableEdgeHovering: false
+        });
+
+        s.refresh();
+
+    });
+    $('#degreeButton').click(function() {
+        $("#degreeFilterToggle").toggle();
+    });
+
+    $('#connectionButton').click(function() {
+        $("#connectedFilterToggle").toggle();
+    });
+    $('#colorButton').click(function() {
+        $("#colorFilterToggle").toggle();
+    });
+    $('#tagsButton').click(function() {
+        $("#tagFilterToggle").toggle();
+    });
+    $('#addEdgeSpecsType').on('change', function() {
+        edgeSettings = this.value;
+        //   edgeSettings = x;
+    });
+
+    $('#nodeShrink').click(function() {
+        $.each(multipleNodes, function() {
+            node.size = nodeSize - 1;
+        });
+
+    });
+    $('#nodeEnlarge').click(function() {
+        $.each(multipleNodes, function() {
+            node.size = nodeSize + 1;
+        });
+
+    });
+    $("#changeLabelThreshold").keyup(function(event) {
+        if (event.keyCode == 13) {
+            var x = document.getElementById("changeLabelThreshold").value;
+            node.label = x;
+            s.refresh();
+        }
+    });
+    $('#applyLabelThreshold').click(function() {
+        var x = parseFloat(document.getElementById("applyLabelThreshold").value);
+        s.settings({
+            labelThreshold: x
+        });
+    })
+});
+
+/*
+    Changes color of specificed node
+*/
+function colorNode(jscolor) {
+
+    //  var newColor = document.getElementById("colorList").value;
+
+    node.color = "#" + jscolor;
+    node.borderColor = "#" + jscolor;
+    s.refresh();
+}
+/*
+    Changes color of specifc edge
+*/
+function colorEdge(jscolor) {
+    edge.color = "#" + jscolor;
+    s.refresh();
+    //      var newColor = document.getElementById("edgeColorList").value;
+    //      console.log(newColor);
+    //      edge.color = newColor;
+
+}
+
+function dynamicEdge() {
+    // var edgeDesign = document.getElementById("edgeTypeList").value;
+    // console.log(edgeDesign);
+
+
+
+    $(document).ready(function() {
+        $("#line").click(function(event) {
+            edge.type = 'line';
+            s.refresh();
+        });
+        $("#curve").click(function(event) {
+            edge.type = 'curve';
+            s.refresh();
+        });
+        $("#arrow").click(function(event) {
+            edge.type = 'arrow';
+            s.refresh();
+        });
+        $("#curvedArrow").click(function(event) {
+            edge.type = 'curvedArrow';
+            s.refresh();
+        });
+        $("#angle").click(function(event) {
+            edge.type = 't';
+            s.refresh();
+        });
+
+        //  edge.type = edgeDesign;
+    });
+}
+
+function hide() {
+    if ($('#hideBox').prop('checked')) {
+        node.hidden = true;
+    } else {
+        node.hidden = false;
+    }
+    /*s.graph.nodes([nodes]).forEach(function(node) {
+        //toggle ability that hides and unhides node
+        if($('#hideBox').prop('checked')) {
+            node.hidden = true;
+        } 
+        else {
+            node.hidden = false;
+        }
+    });*/
+
+    s.refresh();
+
+}
+
+function hideAll() {
+    dom.removeEventListener('click', createNode, true);
+    s.graph.nodes().forEach(function(node) {
+        node.hidden = true;
+    });
+}
+
+function unHideAll() {
+    dom.removeEventListener('click', createNode, true);
+    s.graph.nodes().forEach(function(node) {
+        node.hidden = false;
+    });
+    filter.undo().apply();
+}
+
+function forceAtlas() {
+    $('#forceNotice').removeClass('hidden');
+    $('#forceNotice').addClass('show');
+
+    $('#forceAtlasStart').click(function() {
+        s.startForceAtlas2({
+            worker: true,
+            adjustSizess: true,
+            edgeWeightInfluence: 0,
+            outboundAttractionDistribution: false,
+            //linLogMode: true,
+            barnesHutOptimize: true,
+
+            gravity: 1
+        });
+        s.settings({
+            drawEdges: false
+        });
+    });
+    $('#forceAtlasStop').click(function() {
+        s.stopForceAtlas2();
+        s.settings({
+            drawEdges: true
+        });
+        s.refresh();
+
+    });
+
+
+
+}
+
+function fruchterman() {
+    $('#fruchtermanNotice').removeClass('hidden');
+    $('#fruchtermanNotice').addClass('show');
+
+    $('#fruchtermanStart').click(function() {
+
+
+        var listener = sigma.layouts.fruchtermanReingold.configure(s, {
+            autoArea: true,
+            //area: 50000,
+            iterations: 1000,
+            gravity: 5,
+            speed: 0.1,
+            easing: 'quadraticOut'
+                //easing: 'quadraticInOut',
+                //duration: 10000
+        });
+
+        listener.bind('start stop interpolate', function(e) {
+            console.log(e.type);
+
+        });
+        sigma.layouts.fruchtermanReingold.start(s);
+
+    })
+}
+
+function animations() {
+    /*
+        What I'll do here is set up a container to hold all current animations.  Bring in the animation work as well.  
+    */
+
+}
+
+function cubic() {
+    nodes = s.graph.nodes();
+    len = nodes.length;
+    edges = s.graph.edges();
+    edgeLen = edges.length;
+    var i = 0,
+        u = 0,
+        L = 40,
+        count = 1;
+    s.graph.nodes().forEach(function(n) {
+        n.grid_x = i % L;
+        n.grid_y = u;
+        //n.grid_y = Math.floor(u / L);
+        i = i + 10;
+        count++;
+
+        if (count = 5) {
+
+            u = u + 10;
+            count = 1;
+        }
+
+    });
+
+    sigma.plugins.animate(
+        s, {
+            x: 'grid_x',
+            y: 'grid_y'
+        }
+    );
+}
+
+function circle() {
+    $('#forceNotice').removeClass('show');
+    $('#forceNotice').addClass('hidden');
+    $('#fruchtermanNotice').removeClass('show');
+    $('#fruchtermanNotice').addClass('hidden');
+    nodes = s.graph.nodes();
+    len = nodes.length;
+    edges = s.graph.edges();
+    edgeLen = edges.length;
+    var i = 0,
+        L = len * 25;
+    s.graph.nodes().forEach(function(n) {
+
+        n.circular_x = L * Math.cos(Math.PI * 2 * i / len - Math.PI / 2);
+        n.circular_y = L * Math.sin(Math.PI * 2 * i / len - Math.PI / 2);
+        i++;
+
+    });
+    sigma.plugins.animate(
+        s, {
+            x: 'circular_x',
+            y: 'circular_y'
+        }, 2000
+    );
+}
+
+function threshold() {
+    $('#thresholdChange').removeClass('hidden');
+    $('#thresholdChange').addClass('show');
+
+}
+/*
+
+    Saves graph as a gexf file.  This can be inputted into Gephi
+    Need to edit the gexf file for the save State in order for it to work properly.  
+*/
+
+function saveFile() {
+    //  var gexfString = s.toGEXF();
+    //s.toGEXF({download: true});
+
+    /*
+        Needs some work.  I need to be able to retain the description and the tags of the node.  
+    */
+    var saveFiles = prompt("Save File as: ", "graph1.gexf");
+    s.toGEXF({
+        download: true,
+        filename: saveFiles + ".gexf",
+        nodeAttributes: 'data',
+        edgeAttributes: 'data',
+        renderer: s.renderers[0],
+        creator: 'Sigma.js'
+            //  description: 'This is an awesome graph!'
+    });
+}
+/*
+    Seems like this one needs some work.  Sigma now accepts it, however, it doesn't draw the nodes
+    Can't seem to add any other nodes either.  I suppose that due to the save file attributes, 
+    open file will be a tad bit messed up 
+
+*/
+function openFileSelect()
+{
+	var x;
+	$('#containerFile').removeClass('hidden');
+    $('#containerFile').addClass('show');
+
+    $('#first').click(function(n)
+    {
+    	var x = 'Colorized.gexf';
+    	openFile(x);
+    	$('#containerFile').removeClass('show');
+    $('#containerFile').addClass('hidden');
+
+    s.settings('defaultEdgeType', 'line');
+    });
+    $('#second').click(function(n)
+    {
+    	var x = 'Colorized2.gexf';
+    	openFile(x);
+    	$('#containerFile').removeClass('show');
+    $('#containerFile').addClass('hidden');
+    s.settings('defaultEdgeType', 'line');
+    });
+    $('#third').click(function(n)
+    {
+    	var x = 'Colorized3.gexf';
+    	openFile(x);
+    	$('#containerFile').removeClass('show');
+    $('#containerFile').addClass('hidden');
+    });
+    $('#fourth').click(function(n)
+    {
+    	var x = 'Colorized4.gexf';
+    	openFile(x);
+    	$('#containerFile').removeClass('show');
+    $('#containerFile').addClass('hidden');
+    });
+    $('#fifth').click(function(n)
+    {
+    	var x = 'Colorized5.gexf';
+    	openFile(x);
+    	$('#containerFile').removeClass('show');
+    $('#containerFile').addClass('hidden');
+     s.settings('defaultEdgeType', 'curvedArrow');
+    //s.settings('defaultEdgeType', 'line');
+    });
+    $('#sixth').click(function(n)
+    {
+    	var x = 'smaller.gexf';
+    	openFile(x);
+    	$('#containerFile').removeClass('show');
+    $('#containerFile').addClass('hidden');
+    s.settings('defaultEdgeType', 'curvedArrow');
+    });
+    $('#seventh').click(function(n)
+    {
+        var x = 'ZackTwitter.gexf';
+        openFile(x);
+        $('#containerFile').removeClass('show');
+    $('#containerFile').addClass('hidden');
+    s.settings('defaultEdgeType', 'curve');
+    });
+    $('#eight').click(function(n)
+    {
+        var x = 'ZackTwitter2.gexf';
+        openFile(x);
+        $('#containerFile').removeClass('show');
+    $('#containerFile').addClass('hidden');
+    s.settings('defaultEdgeType', 'curvedArrow');
+    });
+    $('#ninth').click(function(n)
+    {
+        var x = 'CeejayTwitter.gexf';
+        openFile(x);
+        $('#containerFile').removeClass('show');
+    $('#containerFile').addClass('hidden');
+    s.settings('defaultEdgeType', 'curvedArrow');
+    });
+    //return x;
+}
+function openFile(x) {
+    /*  sigma.parsers.gexf('graph1.gexf', 
+        {
+            container: 'graph-container'
+        }); */
+    //  cancelAnimationFrame(frame);
+    
+
+	  sigma.parsers.gexf(x, s, function() {
+    //sigma.parsers.gexf('Colorized5.gexf', s, function() {
+    	//s.settings('defaultEdgeType', 'arrow');
+        nodes = s.graph.nodes();
+        len = nodes.length;
+        document.getElementById('nodeBadge').innerHTML = len;
+        edges = s.graph.edges();
+        edgeLen = edges.length;
+        document.getElementById('edgeBadge').innerHTML = edgeLen;
+
+        s.graph.edges().forEach(function(n) {
+            if (n.size > 5) {
+                n.size = 10;
+            }
+            //  nodes.color = '#' + node.color;
+        });
+
+
+
+
+        s.refresh();
+
+    });
+}
+/*
+    Searches for a node by inputting text and reading that to see if there's any nodes specified with that.  
+
+*/
+function searchNode() {
+    var nodeLabels = [];
+
+    dom.removeEventListener('click', createNode, true);
+    s.unbind();
+    var searchError = document.getElementById('searchBar').value;
+
+
+    var searchLabel = document.getElementById('searchBar').value.toLowerCase();
+    searchLabel = searchLabel.trim();
+
+    //  console.log("Searched for: " + searchLabel);
+
+    s.graph.nodes().forEach(function(node) {
+        nodeLabels.push(node.label.toLowerCase());
+        //      console.log(nodeLabels);
+    })
+
+    var x = nodeLabels.indexOf(searchLabel);
+
+    //  console.log("Array of: " + nodeLabels);
+    //  console.log("Label found at location: " + x);
+
+    if (x == -1) {
+        $(document).ready(function() {
+            document.getElementById('nodeNotFound').innerHTML = searchError + ' not found!';
+            $('#errorMessage').fadeIn().delay(1000).fadeOut('slow');
+        });
+        //document.getElementById('light').style.display = 'block';
+        //document.getElementById('fade').style.display = 'block';
+    } else {
+        foundNode = nodes[x];
+
+
+
+
+        sigma.misc.animation.camera(
+            s.camera, {
+                x: foundNode.x,
+                y: foundNode.y,
+                ratio: 0.1
+            }, {
+                duration: s.settings('animationsTime') || 2000
+            }
+        )
+    }
+
+    nodeLabels = [];
+
+}
+/*
+    Following function zooms in on a node that's selected.  
+    When the box is unchecked, returns back to origin position.  
+*/
+function nodeZoom() {
+    if ($('#nodeZoomIn').prop('checked')) {
+        sigma.misc.animation.camera(
+            s.camera, {
+                x: node[s.camera.readPrefix + 'x'],
+                y: node[s.camera.readPrefix + 'y'],
+                ratio: 0.00925
+            }, {
+                duration: s.settings('animationsTime') || 100000
+            }
+        )
+    } else {
+        sigma.misc.animation.camera(
+            s.camera, {
+                x: 0,
+                y: 0,
+                ratio: 1
+            }, {
+                duration: s.settings('animationsTime') || 100000
+            }
+        )
+    };
+}
+
+function zoomOut() {
+    // Zoom out - animation :
+
+    sigma.misc.animation.camera(c, {
+            x: 0,
+            y: 0,
+            ratio: 1
+                //ratio: c.ratio * 90//c.settings('zoomingRatio')
+        },
+
+        {
+            duration: s.settings('animationsTime') || 150
+        }
+    )
+}
+
+function filterNodes() {
+
+    $('#filter-pane').removeClass('hidden');
+    $('#filter-pane').addClass('show');
+    document.getElementById('nodeBoxGroup').innerHTML = '';
+    document.getElementById('nodeBox').style.display = '';
+    $('#addNodeSpecifications').removeClass('show');
+    $('#addNodeSpecifications').addClass('hidden');
+    dom.removeEventListener('click', createNode, true);
+
+
+    /*  filterNodes.undo();
+        
+
+        filterNodes.nodesBy(function(n) {
+            
+            return this.degree(n.id) > 0;
+            
+        }, 'non-isolates');
+        
+        filterNodes.nodesBy(function(n) {
+
+            return n.size >= 10;
+        }, 'Big Nodes');
+        
+
+        filterNodes.apply(); */
+    //  _.$('nodelist').innerHTML = '';
+    //  _.$('node-tags').innerHTML = '';
+
+    updatePane(s.graph, filter);
+
+    function updatePane(graph, filter) {
+
+        /*
+            Things to work on:
+
+            Build a more dynamic filter.  Degree is one thing.  delete it when it doesn't get used. and set a value to max degree.  
+            Set intervals if there's a good amount.  
+
+            You can build one based on sizes that you wanna specify.   
+            So we need some text boxes and some jquery to be able to figure that out.  
+
+            Degree in that sense works out.  We're now able to determine the size of the nodes this way.  
+    
+
+
+        */
+        var id = {},
+            tags = {},
+            colors = {},
+            attrs = {},
+            size = {},
+            setDegrees = 0, //using this one to try and attempt a set degree function
+            minDegree = 0,
+            maxDegree = 0;
+
+        //  _.$('filterType').innerHTML = '';
+        _.$('nodelist').innerHTML = '';
+        _.$('node-tags').innerHTML = '';
+        _.$('node-color').innerHTML = '';
+        _.$('node-size').innerHTML = '';
+        //  _.$('node-neighborhoods').innerHTML = '';
+
+        s.graph.nodes().forEach(function(n) {
+            maxDegree = Math.max(maxDegree, s.graph.degree(n.id)); //the way that they found degrees was using math.max for max degree.   
+            minDegree = Math.min(minDegree, s.graph.degree(n.id));
+            colors[n.color] = true;
+            tags[n.tag] = true;
+            size[n.size] = true;
+        })
+
+        _.$('min-degree').max = maxDegree; //seems they're using jquery 
+        //  _.$('max-degree-value').textContent = maxDegree;
+
+        document.getElementById('minValue').value = minDegree;
+        document.getElementById('maxValue').value = maxDegree;
+
+        $('#minValue').keyup(function(event) {
+
+            if (event.keyCode == 13) {
+                var x = document.getElementById("minValue").value;
+                minDegree = x;
+                applyDegreeFilter();
+                s.refresh();
+            }
+
+        });
+        $('#maxValue').keyup(function(event) {
+
+            if (event.keyCode == 13) {
+                var x = document.getElementById("maxValue").value;
+                maxDegree = x;
+                applyDegreeFilter();
+                s.refresh();
+            }
+
+        });
+
+        $('#applyDegree').click(function() {
+            minDegree = document.getElementById('minValue').value;
+            maxDegree = document.getElementById('maxValue').value;
+
+            applyDegreeFilter();
+            s.refresh();
+        });
+
+
+        var nodelistElt = _.$('nodelist');
+
+        /*
+            Creates an option for each node on the graph. 
+        */
+        s.graph.nodes().forEach(function(n) {
+            var optionElt = document.createElement("option");
+            optionElt.text = n.label;
+            nodelistElt.add(optionElt);
+        });
+
+
+        /*
+            For this area, we need to make tags more accessible by creating it into an array of tags we can choose from.  Hmm..
+            Split each list of tags into a string.
+        */
+        var nodetagElt = _.$('node-tags');
+
+        /*
+            Obtains the tags from each node and creates an option if it doesn't already exist
+
+            IMPORTANT. This needs to be fixed. Once you change tags to have several tags, it requires a change here because it lists everything as a whole
+        */
+        Object.keys(tags).forEach(function(c) {
+
+            var optionElt = document.createElement("option");
+            optionElt.text = c;
+            nodetagElt.add(optionElt);
+        });
+
+        //var nodeNeighborsElt = _.$('node-neighborhoods');
+
+
+        /*
+            Colors, separate each one into a a large area that we can choose from that we can select multiple colors and then hitting apply.  
+        */
+        var nodeColorsElt = _.$('node-color');
+
+        Object.keys(colors).forEach(function(c) {
+            var optionElt = document.createElement("option");
+            optionElt.text = c;
+            optionElt.style.color = c;
+            optionElt.style.backgroundColor = c;
+            nodeColorsElt.add(optionElt);
+
+            var checkboxElt = document.createElement('checkbox');
+            checkboxElt.setAttribute("type", "checkbox");
+            $('#colorGroup').append(checkboxElt);
+            //  optionElt.setAttribute("type", "checkbox");
+            //   $('#colorGroup').append(optionElt);    
+        });
+
+        var filterTypeElt = _.$('filterType');
+
+        var nodeSizeElt = _.$('node-size');
+
+        Object.keys(size).forEach(function(c) {
+            var optionElt = document.createElement("option");
+            optionElt.text = c;
+            nodeSizeElt.add(optionElt);
+        });
+
+        _.$('reset-btn').addEventListener("click", function(e) {
+            _.$('node-tags').selectedIndex = 0;
+            filter.undo().apply();
+            _.$('dump').textContent = '';
+            _.hide('#dump');
+        });
+
+        function applyDegreeFilter(e) {
+            filter
+                .undo('node-degree')
+                .nodesBy(function(n) {
+                    return this.degree(n.id) >= minDegree && this.degree(n.id) <= maxDegree;
+                }, 'node-degree')
+                .apply();
+        }
+
+        function filterNode(e) {
+            var nLabel = e.target[e.target.selectedIndex].value;
+            filter
+                .undo('nodelist')
+                .nodesBy(function(n) {
+                    return !nLabel.length || n.label === nLabel;
+                }, 'nodelist')
+                .apply();
+
+        }
+
+        function applyMinDegreeFilter(e) {
+            var v = e.target.value;
+            _.$('min-degree-val').textContent = v;
+
+            filter
+                .undo('min-degree')
+                .nodesBy(function(n) {
+                    return this.degree(n.id) >= v;
+                }, 'min-degree')
+                .apply();
+        }
+
+        function applyTagFilter(e) {
+            var c = e.target[e.target.selectedIndex].value;
+            filter
+                .undo('node-tags')
+                .nodesBy(function(n) {
+                    return !c.length || n.tag === c;
+                }, 'node-tags')
+                .apply();
+
+
+        }
+
+        function applyColorFilter(e) {
+            var c = e.target[e.target.selectedIndex].value;
+            filter
+                .undo('node-color')
+                .nodesBy(function(n) {
+                    return !c.length || n.color === c;
+                }, 'node-color')
+                .apply();
+
+        }
+
+        function applySizeFilter(e) {
+            var c = e.target[e.target.selectedIndex].value;
+            filter
+                .undo('node-size')
+                .nodesBy(function(n) {
+                    return !c.length || n.size === c;
+
+                }, 'node-size')
+                .apply();
+        }
+
+        function allGroupsFilter(e) {
+            if (document.getElementById('node-tags').value = 'All Groups')
+
+            {
+                filter.undo().apply();
+            }
+            //var c = e.target[e.target.selectedIndex].value;
+            //filter
+            //  .undo()
+            /*  .nodesBy(function(n) {
+
+                return !c.length || n.tag.length > 1; 
+            }, 'All Groups') */
+            //  .apply();
+            /*if(_.$('node-tags').matches("All Groups"))
+            {
+                _.$('node-tags').selectedIndex = 0;
+                filter.undo().apply();
+                _.$('dump').textContent ='';
+                _.hide('#dump');
+            } */
+        }
+
+        function filterTypeChange() {
+            console.log('changed');
+            var target = $(this).data('target'); //gathers the information of the selected value, and then looks for that data.  
+            $(target).children().addClass('hidden'); //all other things are hidden 
+
+            var show = $("option:selected", this).data('show'); //for the selected option, the data is shown 
+            $(show).removeClass('hidden'); //removes the hidden class 
+        }
+        _.$('nodelist').addEventListener("change", filterNode);
+        _.$('node-tags').addEventListener("change", applyTagFilter);
+        _.$('node-color').addEventListener("change", applyColorFilter);
+        _.$('node-size').addEventListener("change", applySizeFilter);
+        _.$('min-degree').addEventListener("input", applyMinDegreeFilter); // for Chrome and FF
+        _.$('min-degree').addEventListener("change", applyMinDegreeFilter); // for IE10+, that sucks
+
+        $('#filterType').change(filterTypeChange);
+        $(document).ready(function() {
+
+            $('#noNeighbors').click(function(n) {
+                filter.undo().apply();
+            });
+            $('#yesNeighbors').click(function(n) {
+                filter
+                    .undo('non-isolates')
+                    .nodesBy(function(n) {
+                        return this.degree(n.id) > 0;
+                    }, 'non-isolates')
+                    .apply();
+            });
+
+        });
+        //_.$('node-tags').addEventListener("change", allGroupsFilter);
+    }
+
+
+
+
+    s.refresh();
+
+
+}
+</script>
+
+</html>
+

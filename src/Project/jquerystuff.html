@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Demo</title> <!-- Title of webpage -->
+	
+	<style>
+a.test {
+    font-weight: bold;
+}
+</style>
+</head>
+<body>
+    <a href="http://jquery.com/">jQuery</a> <!-- clickable link -->
+    <script src="jquery-2.1.4.js"></script> <!-- Source script is jquery.js -->
+    <script>
+$( "a" ).addClass( "test" ); //all <a> elements are now bold
+$( "a" ).removeClass( "test" ); //removes an existing class This cancels out addclass
+
+/*
+	This function will remove the link 
+*/
+
+$( "a" ).click(function( event ) { 
+ 
+    event.preventDefault();
+ 
+    $( this ).hide( "slow" );
+ 
+});
+//pops up a page that says welcome
+/*		window.onload = function() {
+ 
+			alert( "welcome" ); 
+ 
+		}; */
+//runs code as soon as document is ready to be manipulated.  
+//.ready() specifies a function to execute when the DOM is fully loaded
+		$( document ).ready(function() {
+			$( "a" ).click(function( event ) {
+ 
+			//alert( "As you can see, the link no longer took you to jquery.com" );
+ 
+ //       event.preventDefault(); //this line of code will prevent an event from starting
+ 
+    });
+
+});
+
+
+ 
+//callbacks are functions that pass an argument to another function and is executed after its parent function has completed.  Special because they patiently wait to execute until their parent finishes. 
+
+$.get( "jquerystuff.html", myCallBack );
+
+
+
+
+
+  
+    </script>
+</body>
+</html>
