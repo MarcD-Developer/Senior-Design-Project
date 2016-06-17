@@ -12,3 +12,5 @@ This project uses the Javascript libraries, [Sigma.js] (https://github.com/jacom
 ##Navigating through the code
 
 There's several files in this project.  However, the main source file for the website is [here] (https://github.com/SmokedEel/Senior-Design-Project/blob/master/src/Project/index.html).  That file is where most of the project has been created, sent to one webpage for one to navigate through.
+
+![Courtesy of @flipCeej's Twitter](http://i.imgur.com/c6tRr8k.jpg)
